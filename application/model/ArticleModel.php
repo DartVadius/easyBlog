@@ -64,6 +64,29 @@ class ArticleModel extends BaseModel {
         }
     }
     public function update() {
-
+        $sql =  "UPDATE $this->tableName SET
+        article_title = :artTitle,
+        article_desc = :artDesc,
+        article_text = :artText,
+        article_category = :artCategory,
+        article_author = :artAuthor,
+        article_date = :artDate
+        article_meta = :artMeta";
+        $arr = array (
+            'artTitle' => $this->artTitle,
+            'artDesc' => $this->artDesc,
+            'artText' => $this->artText,
+            'artAuthor' => $this->artAuthor,
+            'artCategory' => $this->artCategory,
+            'artDate' => $this->artDate,
+            'artMeta' => $this->artMeta
+        );
+        try {
+            $res = $this->pdo->prepare($sql);
+            $res->execute($arr);
+            return TRUE;
+        } catch (PDOException $ex) {
+            return 'Что-то пошло не так: ' . $ex->getMessage();
+        }
     }
 }

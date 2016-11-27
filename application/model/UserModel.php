@@ -57,12 +57,14 @@ class UserModel extends BaseModel {
     public function update() {
         $sql =  "UPDATE $this->tableName SET
             user_email = :userEmail,
-            user_password = :userPass
+            user_password = :userPass,
+            user_group = :userGroup
             WHERE user_id = $this->userId";
         $pass = SequreLib::hashing($this->userPass);
         $arr = array (
             'userEmail' => $this->userEmail,
-            'userPass' => $pass
+            'userPass' => $pass,
+            'userGroup' => $this->userGroup
         );
         try {
             $res = $this->pdo->prepare($sql);

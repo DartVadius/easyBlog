@@ -29,5 +29,6 @@ return [
     'defaultController' => 'index',
     'defaultAction' => 'index',
     'title' => 'Book Shop',
-    'defaultUser' => 0
+    'defaultUser' => 0,
+    'articlesOnPage' => 5
 ];

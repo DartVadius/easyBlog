@@ -8,9 +8,11 @@
  */
 class IndexController extends BaseController {
     public function indexAction() {
-        $book = new BookRepository();
-        $books = $book->findAll();      
-        //index - ищет view/book/index.php
-        $this->view->render('index', ['books' => $books]);
+        $art = new ArticleRepository();
+        $articles = $art->getPage();      
+        $param = array ([
+            'index', ['articles' => $articles]
+        ]);
+        $this->view->render($param);
     }
 }

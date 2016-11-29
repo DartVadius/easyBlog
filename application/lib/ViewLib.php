@@ -26,8 +26,8 @@ class ViewLib {
     }
     
     public function render($array) {
-        $content = array();
-        foreach ($array as $temp) {
+        $content = array();        
+        foreach ($array as $temp) {            
             $template = $temp[0];
             $params = $temp[1];
             array_push($content, $this->getTemplateContent($template, $params));            

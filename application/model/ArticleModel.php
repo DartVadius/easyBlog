@@ -6,7 +6,7 @@
  * @author DartVadius
  */
 class ArticleModel extends BaseModel {
-    private $tableName = 'article';
+    private static $tableName = 'article';
     private $artId;
     private $artTitle;
     private $artDesc;
@@ -24,7 +24,7 @@ class ArticleModel extends BaseModel {
         $this->artCategory = $artCategory;
         $this->artAuthor = $artAuthor;
         $this->artMeta = $artMeta;
-    }
+    }    
     public function setArtId($id) {
         $this->artId = $id;
     }
@@ -34,6 +34,12 @@ class ArticleModel extends BaseModel {
     public function setArtUpdate($date) {
         $this->artUpdate = $date;
     }
+    public function __get($name) {
+        if (property_exists($this, $name)) {
+            return $this->$name;
+        }
+    }
+
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET
         article_title = :artTitle,
@@ -41,8 +47,7 @@ class ArticleModel extends BaseModel {
         article_text = :artText,
         article_category = :artCategory,
         article_author = :artAuthor,
-        article_date = :artDate,
-        article_update = :artUpdate,
+        article_date = :artDate,        
         article_meta = :artMeta";
         $date = date("Y-m-d H:i:s");
         $arr = array (
@@ -51,8 +56,7 @@ class ArticleModel extends BaseModel {
             'artText' => $this->artText,
             'artCategory' => $this->artCategory,
             'artAuthor' => $this->artAuthor,
-            'artDate' => $date,
-            'artUpdate' => $date,
+            'artDate' => $date,            
             'artMeta' => $this->artMeta
         );
         try {

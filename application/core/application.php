@@ -16,6 +16,29 @@ class Application {
     public function __construct($params = []) {
         self::$App = $this;
         $this->params = $params;
+        $this->loadConfig();
+        session_start();
+        $_SESSION['user_status'] = 0;
+        $_SESSION['user_id'] = NULL;
+    }
+    
+    private function loadConfig() {
+        $envConfigPath = APP . 'config/' . APPLICATION_ENV . '.php';
+        if (file_exists($envConfigPath)) {
+            $envConfig = require_once $envConfigPath;
+            $this->params = array_replace_recursive($this->params, $envConfig);
+        }
+        define("HOST_NAME", $this->db['host']);
+        define("DB_NAME", $this->db['name']);
+        define("USER_NAME", $this->db['user']);
+        define("PASSWORD", $this->db['password']);
+        set_exception_handler(array(get_class($this), "getStaticException"));
+    }
+    //зачем так сложно?????
+    public static function getStaticException($exception) {
+        $exceptionHandlerClass = ucwords(Application::$App->exceptionController) . "Controller";
+        $exceptionHandlerClass = new $exceptionHandlerClass();
+        $exceptionHandlerClass->{Application::$App->exceptionAction}($exception);
     }
     public function __get($name) {
         if(isset($this->params[$name])) {
@@ -53,11 +76,13 @@ class Application {
                     $this->url_controller->indexAction();
                 }
                 else {
-                    header('location: ' . URL . 'problem2');
+                    throw new Exception('Page not found', 404);
+                    //header('location: ' . URL . 'problem2');
                 }
             }
         } else {
-            header('location: ' . URL . 'problem3');
+            throw new Exception('Page not found', 404);
+            //header('location: ' . URL . 'problem3');
         }
     }
     /**

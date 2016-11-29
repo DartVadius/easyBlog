@@ -1,10 +1,6 @@
 <?php
-/**
- * autoloader for classes 
- * 
- * @param string $class class name
- */
 function __autoload($class) {
+
     preg_match_all('/[A-Z][^A-Z]*/', $class, $results);
     $results =  end($results[0]);
     $pathToClassFile = __DIR__ . '/../'. strtolower($results). '/' . $class.'.php';
@@ -12,23 +8,24 @@ function __autoload($class) {
         require_once $pathToClassFile;
     }
 }
-/**
- * DB connection
- */
-define("HOST_NAME", 'localhost');
-define("DB_NAME", 'blog');
-define("USER_NAME", 'root');
-define("PASSWORD", '');
 
-/**
- * params for Application class 
- */
+define('APPLICATION_ENV', $_SERVER['APPLICATION_ENV']);
 
 return [
     'layout' => 'layout',
     'defaultController' => 'index',
     'defaultAction' => 'index',
-    'title' => 'Book Shop',
-    'defaultUser' => 0,
-    'articlesOnPage' => 5
+    'exceptionController' => 'error',
+    'exceptionAction' => 'error',
+    'title' => 'Easy Blog',    
+    'db' => [
+        'host' => '',
+        'name' => '',
+        'user' => '',
+        'password' => ''
+    ],
+    'email' => [
+        'name' => "DartVadius",
+        'email' => 'test@gmail.com'
+    ]
 ];

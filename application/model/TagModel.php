@@ -5,7 +5,7 @@
  *
  * @author DartVadius
  */
-class TagsModel extends BaseModel {
+class TagModel extends BaseModel {
     private $tableName = 'tags';
     private $tagId;
     private $tagName;

@@ -56,6 +56,12 @@ class ArticleRepository extends BaseRepository {
             return FALSE;
         }
     }
+    /**
+     * pagination
+     * 
+     * @param int $page
+     * @return boolean/array of Article objects 
+     */
     public function getPage($page = 1) {
         //количество статей
         $sql = "SELECT COUNT(*) FROM " . ArticleModel::getTableName();

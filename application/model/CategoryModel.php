@@ -6,21 +6,38 @@
  * @author DartVadius
  */
 class CategoryModel extends BaseModel {
-    private $tableName = 'category';
+    private static $tableName = 'category';
     private $categoryId;
     private $categoryName;
     private $categoryDesc;
-    private $categoryParentId = NULL;
-    public function __construct($categoryName, $categoryDesc) {
+    private $categoryParentId;
+    public function __construct($categoryName, $categoryDesc, $categoryParentId = 0) {
         parent::__construct();
         $this->categoryName = $categoryName;
         $this->categoryDesc = $categoryDesc;
+        $this->categoryParentId = $categoryParentId;        
+    }
+    public static function getTableName() {        
+        return self::$tableName;
     }
     public function setCategoryParentId($id) {
         $this->categoryParentId = $id;
     }
     public function setCategoryId($id) {
         $this->categoryId = $id;
+    }
+    public function getCategoryId() {
+        return $this->categoryId;
+    }
+    public function getCategoryParentId() {
+        return $this->categoryParentId;
+    }
+    public function getCategoryName() {
+        return $this->categoryName;
+    }
+
+    public function __set($name, $value) {
+        $this->$name = $value;
     }
 
     public function save() {

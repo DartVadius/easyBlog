@@ -17,7 +17,8 @@ return [
     'defaultAction' => 'index',
     'exceptionController' => 'error',
     'exceptionAction' => 'error',
-    'title' => 'Easy Blog',    
+    'title' => 'Easy Blog',
+    'article_limit' => 5,
     'db' => [
         'host' => '',
         'name' => '',

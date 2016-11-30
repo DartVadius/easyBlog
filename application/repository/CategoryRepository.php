@@ -6,8 +6,13 @@
  * @author DartVadius
  */
 class CategoryRepository extends BaseRepository {
+    /**
+     * get all categories
+     * 
+     * @return boolean|array of objects
+     */
     public function findAll() {
-        $categoryList = array();
+        $categoryList = array();        
         $sql = "SELECT * FROM " . CategoryModel::getTableName();
         $res = $this->pdo->query($sql);
         $category = $res->fetchAll();
@@ -21,32 +26,47 @@ class CategoryRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    }
-
+    }   
+    
     /**
-     * Функция превращает одномерный массив в многомерный по принципу родитель -> потомок
-     *
-     * @param array $array
-     * @param string $id
-     * @param string $parent_id
-     * @param string $children
+     * get branch of category starting from category ID = $id
+     * 
+     * @staticvar array $branch
+     * @param array $tree -> get it from SupportLib::Tree
+     * @param int $id
      * @return array
      */
-    public function categoryTree($id = 'category_id', $parent_id = 'category_parent_id', $children = 'children') {              
-        $sql = "SELECT * FROM " . CategoryModel::getTableName();
-        $res = $this->pdo->query($sql);
-        $category = $res->fetchAll();        
-        $tree = [[$children => []]];
-        $references = [&$tree[0]];
-        foreach($category as $item) {
-            if(isset($references[$item[$id]])) {
-                $item[$children] = $references[$item[$id]][$children];
+    
+    public function findChildren($tree, $id) {        
+        static $branch;        
+        foreach ($tree as $value) {            
+            if ($value['category_id'] == $id) {
+                $branch[0] = $value;                
             }
-            $references[$item[$parent_id]][$children][] = $item;
-            $references[$item[$id]] =& $references[$item[$parent_id]][$children][count($references[$item[$parent_id]][$children]) - 1];
+            if (isset($value['children'])) {
+               $this->findChildren($value['children'], $id);
+            }
         }        
-        return $tree[0][$children];
+        return $branch;
     }
+    /**
+     * get all category ID`s from this branch
+     * 
+     * @staticvar array $categoryID
+     * @param array $branch -> get it from $this->findChildren()
+     * @return array 
+     */
+    public function findChildrenCategoryId($branch) {
+        static $categoryID = array();
+        foreach ($branch as $cat) {            
+            array_push($categoryID, $cat['category_id']);
+            if (isset($cat['children'])) {
+               $this->findChildrenCategoryId($cat['children']);
+            }
+        }
+        return $categoryID;
+    }
+
     public function deleteById($id) {
         $sql = "DELETE FROM " . CategoryModel::getTableName() . " WHERE category_id = $id";
         $this->pdo->query($sql);

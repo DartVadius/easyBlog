@@ -5,7 +5,7 @@
  * @author DartVadius
  */
 class UserModel extends BaseModel {
-    private $tableName = 'user';
+    protected static $tableName = 'user';
     private $userId;
     private $userName;
     private $userLogin;
@@ -21,6 +21,9 @@ class UserModel extends BaseModel {
         $this->userEmail = $userEmail;
     }
     
+    public static function getTableName() {        
+        return self::$tableName;
+    }
     public function setUserId($id) {
         $this->userId = $id;
     }

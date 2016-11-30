@@ -6,13 +6,16 @@
  * @author DartVadius
  */
 class ArtToTagModel extends BaseModel {
-    private $tableName = 'art_to_tag';
+    protected static $tableName = 'art_to_tag';
     private $artId;
     private $tagId;
     public function __construct($artId, $tagId) {
         parent::__construct();
         $this->artId = $artId;
         $this->tagId = $tagId;
+    }
+    public static function getTableName() {        
+        return self::$tableName;
     }
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET

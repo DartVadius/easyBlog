@@ -76,13 +76,11 @@ class Application {
                     $this->url_controller->indexAction();
                 }
                 else {
-                    throw new Exception('Page not found', 404);
-                    //header('location: ' . URL . 'problem2');
+                    throw new Exception('Page not found', 404);                    
                 }
             }
         } else {
-            throw new Exception('Page not found', 404);
-            //header('location: ' . URL . 'problem3');
+            throw new Exception('Page not found', 404);            
         }
     }
     /**

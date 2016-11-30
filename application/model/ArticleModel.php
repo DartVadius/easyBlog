@@ -6,7 +6,7 @@
  * @author DartVadius
  */
 class ArticleModel extends BaseModel {
-    private static $tableName = 'article';
+    protected static $tableName = 'article';
     private $artId;
     private $artTitle;
     private $artDesc;
@@ -24,7 +24,11 @@ class ArticleModel extends BaseModel {
         $this->artCategory = $artCategory;
         $this->artAuthor = $artAuthor;
         $this->artMeta = $artMeta;
-    }    
+    } 
+    public static function getTableName() {        
+        return self::$tableName;    
+    }
+
     public function setArtId($id) {
         $this->artId = $id;
     }

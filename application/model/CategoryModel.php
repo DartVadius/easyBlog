@@ -6,7 +6,7 @@
  * @author DartVadius
  */
 class CategoryModel extends BaseModel {
-    private static $tableName = 'category';
+    protected static $tableName = 'category';
     private $categoryId;
     private $categoryName;
     private $categoryDesc;

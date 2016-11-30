@@ -6,12 +6,15 @@
  * @author DartVadius
  */
 class TagModel extends BaseModel {
-    private $tableName = 'tags';
+    protected static $tableName = 'tags';
     private $tagId;
     private $tagName;
     public function __construct($tagName) {
         parent::__construct();
         $this->tagName = $tagName;
+    }
+    public static function getTableName() {        
+        return self::$tableName;
     }
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET

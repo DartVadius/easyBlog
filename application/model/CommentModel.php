@@ -6,7 +6,7 @@
  * @author DartVadius
  */
 class CommentModel extends BaseModel {
-    private $tableName = 'comments';
+    protected static $tableName = 'comment';
     private $commentId;
     private $commentParentId = NULL;
     private $commentUserId;
@@ -19,8 +19,23 @@ class CommentModel extends BaseModel {
         $this->commentArticleId = $commentArticleId;
         $this->commentText = $commentText;
     }
+    public static function getTableName() {        
+        return self::$tableName;
+    }
     public function setCommentParentId($id) {
         $this->commentParentId = $id;
+    }
+    public function setCommentId($id) {
+        $this->commentId = $id;
+    }
+    public function setCommentDate($date) {
+        $this->commentDate = $date;
+    }
+    public function getCommentId() {
+        return $this->commentId;
+    }
+    public function getCommentParentId() {
+        return $this->commentParentId;
     }
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET

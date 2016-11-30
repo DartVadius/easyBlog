@@ -5,7 +5,7 @@
  * @author DartVadius
  */
 class GroupModel extends BaseModel {
-    private $tableName = 'group';
+    protected static $tableName = 'group';
     private $groupId;
     private $groupName;
     private $groupValue;
@@ -15,6 +15,10 @@ class GroupModel extends BaseModel {
         $this->groupName = $groupName;
         $this->groupValue = $groupValue;
         $this->groupDesc = $groupDesc;
+    }
+    
+    public static function getTableName() {        
+        return self::$tableName;
     }
     public function setGroupId($id) {
         $this->groupId = $id;

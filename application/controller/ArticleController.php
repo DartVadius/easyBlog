@@ -8,7 +8,9 @@ class ArticleController extends BaseController {
     public function indexAction() {
         
     }
-
+    /**
+     * @todo доделать экшен
+     */
     public function saveArticleAction() {
         $artTitle = SequreLib::clearReq($_POST['title']);
         $artDesc = SequreLib::clearReq($_POST['short_desc']);
@@ -18,6 +20,7 @@ class ArticleController extends BaseController {
         $artMeta = SequreLib::clearReq($_POST['meta']);
         $article = new ArticleModel($artTitle, $artDesc, $artText, $artCategory, $artAuthor, $artMeta);
         $valid = new ArticleValidate($article);
+        
     }
     public function addArticleAction() {
         //список категорий для селекта в форме добавления статьи
@@ -25,6 +28,14 @@ class ArticleController extends BaseController {
         $category = $cat->findAll();
         $param = array (
             ['addArticle', ['category' => $category]]
+        );
+        $this->view->render($param);
+    }
+    public function pageAction($pageNum = 1) {
+        $art = new ArticleRepository();
+        $page = $art->getPage($pageNum);
+        $param = array (
+            ['page', ['page' => $page]]
         );
         $this->view->render($param);
     }

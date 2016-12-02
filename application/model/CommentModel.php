@@ -22,6 +22,19 @@ class CommentModel extends BaseModel {
     public static function getTableName() {        
         return self::$tableName;
     }
+    public function getCommentUserId() {
+        return $this->commentUserId;
+    }
+    public function getCommentArticleId() {
+        return $this->commentArticleId;
+    }
+    public function getCommentDate() {
+        return $this->commentDate;
+    }
+    public function getCommentText() {
+        return $this->commentText;
+    }
+
     public function setCommentParentId($id) {
         $this->commentParentId = $id;
     }

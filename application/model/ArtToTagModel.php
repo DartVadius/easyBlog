@@ -17,6 +17,13 @@ class ArtToTagModel extends BaseModel {
     public static function getTableName() {        
         return self::$tableName;
     }
+    public function getArtId() {
+        return $this->artId;
+    }
+    public function getTagId() {
+        return$this->tagId;
+    }
+
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET
         art_to_tag_art_id = :artId,

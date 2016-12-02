@@ -26,6 +26,15 @@ class GroupModel extends BaseModel {
     public function getGroupValue() {
         return $this->groupValue;
     }
+    public function getGroupName() {
+        return $this->groupName;
+    }
+    public function getGroupDesc() {
+        return $this->groupDesc;
+    }
+    public function getGroupId() {
+        return $this->groupId;
+    }
 
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET

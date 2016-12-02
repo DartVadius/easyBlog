@@ -4,16 +4,15 @@
  */
 class IndexController extends BaseController {
     public function indexAction() {
-        
-        $rep = new CategoryRepository();             
+        //SupportLib::page('article');
+        /*$rep = new CategoryRepository();             
         $tree = SupportLib::Tree('category_id', 'category_parent_id', 'category');           
         $cat = $rep->findChildren($tree, 1);
         $id = $rep->findChildrenCategoryId($cat);         
-        /*$art = new ArticleRepository();
-        $articles = $art->getPage();  */    
+        $art = new ArticleRepository();
+        $articles = $art->getPage();*/     
         $param = array (
-            ['index', ['tree' => $cat]],
-            ['test', ['test' => 'testtest!']]
+            ['index', ['' => '']]            
         );
         $this->view->render($param);
     }

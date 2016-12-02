@@ -18,7 +18,14 @@ return [
     'exceptionController' => 'error',
     'exceptionAction' => 'error',
     'title' => 'Easy Blog',
+    //количество статей на странице
     'article_limit' => 5,
+    //минимальная длина логина, имени и пароля
+    'login_length' => 6,
+    'name_length' => 3,
+    'pass_length' =>6,
+    //группа доступа, которая будет присваиваться новым зарегистрировавшимся пользователям по умолчанию
+    'group_value' => 1,
     'db' => [
         'host' => '',
         'name' => '',

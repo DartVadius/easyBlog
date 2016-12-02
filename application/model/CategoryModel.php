@@ -35,6 +35,9 @@ class CategoryModel extends BaseModel {
     public function getCategoryName() {
         return $this->categoryName;
     }
+    public function getCategoryDesc() {
+        return $this->categoryDesc;
+    }
 
     public function __set($name, $value) {
         $this->$name = $value;

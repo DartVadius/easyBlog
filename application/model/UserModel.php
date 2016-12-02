@@ -24,29 +24,45 @@ class UserModel extends BaseModel {
     public static function getTableName() {        
         return self::$tableName;
     }
+    public function getUserEmail() {
+        return $this->userEmail;
+    }
+
+    public function getUserLogin() {
+        return $this->userLogin;
+    }
+    public function getUserPass() {
+        return $this->userPass;
+    }
+    public function getUserName() {
+        return $this->userName;
+    }
+    public function getUserId() {
+        return $this->userId;
+    }
+    
     public function setUserId($id) {
         $this->userId = $id;
     }
-    
+
     public function setUserGroup($userGroup) {
         $this->userGroup = $userGroup;
     }
     
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO ". self::$tableName . " SET
         user_name = :userName,
         user_login = :userLogin,
         user_password = :userPass,
         user_email = :userEmail,
         user_group = :userGroup";
-        $pass = SequreLib::hashing($this->userPass);
-        $group = Application::$App->defaultUser;
+        $pass = password_hash($this->userPass, PASSWORD_DEFAULT);        
         $arr = array (
             'userName' => $this->userName,
             'userLogin' => $this->userLogin,
             'userPass' => $pass,
             'userEmail' => $this->userEmail,
-            'userGroup' => $group
+            'userGroup' => 1
         );
         try {
             $res = $this->pdo->prepare($sql);
@@ -58,12 +74,12 @@ class UserModel extends BaseModel {
     }
     
     public function update() {
-        $sql =  "UPDATE $this->tableName SET
+        $sql =  "UPDATE " . self::$tableName . "SET
             user_email = :userEmail,
             user_password = :userPass,
             user_group = :userGroup
             WHERE user_id = $this->userId";
-        $pass = SequreLib::hashing($this->userPass);
+        $pass = password_hash($this->userPass, PASSWORD_DEFAULT);
         $arr = array (
             'userEmail' => $this->userEmail,
             'userPass' => $pass,

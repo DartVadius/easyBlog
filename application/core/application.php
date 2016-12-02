@@ -17,9 +17,7 @@ class Application {
         self::$App = $this;
         $this->params = $params;
         $this->loadConfig();
-        session_start();
-        $_SESSION['user_status'] = 0;
-        $_SESSION['user_id'] = NULL;
+        session_start();                
     }
     
     private function loadConfig() {

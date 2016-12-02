@@ -13,9 +13,20 @@ class TagModel extends BaseModel {
         parent::__construct();
         $this->tagName = $tagName;
     }
-    public static function getTableName() {        
+    public static function getTableName() {
         return self::$tableName;
     }
+    public function getTagName() {
+        return $this->tagName;
+    }
+
+    public function setTagId($id) {
+        $this->tagId = $id;
+    }
+    public function getTagId() {
+        return $this->tagId;
+    }
+
     public function save() {
         $sql =  "INSERT INTO $this->tableName SET
         tags_name = :tagName";

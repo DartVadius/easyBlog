@@ -13,18 +13,23 @@ class SupportLib {
      * @param int $page
      * @return boolean|array of objects
      */
-    public static function page($arrayObj, $page = 1) {
+    public static function page($tableName, $page = 1) {
         $pageList = array();
-        //количество объектов
-        $objCount = count($arrayObj);        
+        $pdo = PDOLib::getInstance()->getPdo();
+        $sql = "SELECT COUNT(*) FROM " . $tableName;
+        $res = $pdo->query($sql);
+        $count = $res->fetch();
+        $objCount = $count['COUNT(*)'];
+             
         //количество статей на странице, задается в конфиге
         $limit = Application::$App->article_limit;        
         //количество страниц 
         $pages = ceil($objCount / $limit);
+        
         //если статей нет 
         if ($pages == 0) {
             $pageList['msg'] = 'No data found';
-            return $artList;
+            return $pageList;
         } 
         //если запрашиваемая страница больше общего количества страниц - выводится первая страница
         if ($pages < $page || $page < 0) {
@@ -32,9 +37,13 @@ class SupportLib {
         }
         //точка отсчета для выборки
         $start = $page * $limit - $limit;
-        $pageList = array_slice($arrayObj, $start, $limit);        
-        if ($pageList) {            
-            return $artList;
+        $name = $tableName . "_id";
+        echo $name;
+        $sql = "SELECT $name FROM " . $tableName . "LIMIT $start, $limit";
+        $res = $pdo->query($sql);
+        $list = $res->fetchAll();
+        if ($list) {            
+            return $list;
         } else {
             return FALSE;
         }

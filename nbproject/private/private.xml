@@ -3,11 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/repository/CategoryRepository.php</file>
-            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/repository/ArticleRepository.php</file>
-            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/index/index.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/controller/UserController.php</file>
             <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/controller/IndexController.php</file>
-            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/lib/SupportLib.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/repository/UserRepository.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/core/application.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/layout/guest.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/model/UserModel.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/user/user.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/index/index.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/article/addArticle.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/user/addUser.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/layout/layout.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/view/layout/logged.php</file>
+            <file>file:/C:/OS/OpenServer/domains/localhost/Blog/application/validate/UserValidate.php</file>
         </group>
     </open-files>
 </project-private>

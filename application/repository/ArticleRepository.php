@@ -33,7 +33,7 @@ class ArticleRepository extends BaseRepository {
             return FALSE;
         }
     }
-    
+
     public function findByCatId($id) {
         $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_category = $id";
         $res = $this->pdo->query($sql);
@@ -55,7 +55,7 @@ class ArticleRepository extends BaseRepository {
             return FALSE;
         }
     }
-    
+
     public function findAll() {
         $artList = array();
         $sql = "SELECT * FROM " . ArticleModel::getTableName();
@@ -78,7 +78,7 @@ class ArticleRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    } 
+    }
 
     public function deleteById($id) {
         $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = $id";

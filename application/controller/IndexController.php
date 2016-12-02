@@ -10,10 +10,19 @@ class IndexController extends BaseController {
         $cat = $rep->findChildren($tree, 1);
         $id = $rep->findChildrenCategoryId($cat);         
         $art = new ArticleRepository();
-        $articles = $art->getPage();*/     
-        $param = array (
-            ['index', ['' => '']]            
-        );
+        $articles = $art->getPage();*/
+        if (!empty($_SESSION['user_id'])) {
+            $param = array (
+                ['layout/logged', ['' => '']],
+                ['index/index', ['' => '']]            
+            );
+        } else {
+            $param = array (
+                ['layout/guest', ['' => '']],
+                ['index', ['' => '']]            
+            );
+        }
+        
         $this->view->render($param);
     }
     

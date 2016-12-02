@@ -18,12 +18,6 @@
 </head>
 <body class="" style="">
     <div class="container">
-    <?php if (!empty($_SESSION['user_id'])) {
-        require_once 'logged.php';
-    } else {
-        require_once 'guest.php';
-    } ?>
-    
         <?php foreach ($content as $value) { echo $value; } ?>        
     </div>
 </body>

@@ -3,7 +3,7 @@
     <p>Логин: <?php echo $user_login ?></p>
     <p>Email: <?php echo $user_email ?></p>
     <form class="" action="/blog/index" method="POST">
-        <button >Вернуться</button>
+        <button class="btn btn-primary wellcome">Вернуться</button>
     </form>
     
 </div>

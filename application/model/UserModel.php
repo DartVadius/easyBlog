@@ -40,7 +40,10 @@ class UserModel extends BaseModel {
     public function getUserId() {
         return $this->userId;
     }
-    
+    public function getUserGroup() {
+        return $this->userGroup;
+    }
+
     public function setUserId($id) {
         $this->userId = $id;
     }

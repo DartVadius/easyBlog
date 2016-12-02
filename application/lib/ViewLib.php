@@ -16,8 +16,8 @@ class ViewLib {
     private function getTemplateContent($template, $params = []) {
         extract($params);
         ob_start();
-        $pathToTemplate = $this->viewPath . $template . '.php';
-        if (file_exists($pathToTemplate)) {
+        $pathToTemplate = APP . 'view/' . $template . '.php';
+        if (file_exists($pathToTemplate)) {            
             require_once $pathToTemplate;
         }
         $content = ob_get_contents();

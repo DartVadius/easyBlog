@@ -1,8 +1,13 @@
+<div class="row page-header">
+    <form class="" action="/blog/index" method="POST">
+        <button class="btn btn-primary">Вернуться</button>
+    </form>
+</div>
 <div class="row">
     <div class="col-md-6">
     <div class="text-right">
-    <div class="alert-warning">
-        <?php echo $_SESSION['msg'] ?>
+    <div class="alert-info">
+        <?php echo $_SESSION['msg']; ?>
     </div>        
     <form class="" action="/blog/user/saveUser" method="POST">        
         <label for="name" class="">Придумайте имя (будет отображаться на сайте)</label>
@@ -13,11 +18,10 @@
         <input name="pass" type="password" size="50" required='required'><br>
         <label for="passcheck" class="">Повторите пароль</label>
         <input name="passcheck" type="password" size="50" required='required'><br>
-        <label for="email" class="">Введите емэйл</label>
+        <label for="email" class="">Введите email</label>
         <input name="email" type="text" size="50"><br>        
-        <input type="submit" value="Зарегистрироваться" name="submit" class="btn btn-primary">  
-        
-    </form>
-     </div>   
+        <input type="submit" value="Зарегистрироваться" name="submit" class="btn btn-primary">
+    </form>        
+    </div>
     </div>
 </div>

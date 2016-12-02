@@ -17,9 +17,9 @@ class Application {
         self::$App = $this;
         $this->params = $params;
         $this->loadConfig();
-        session_start();                
+        session_start();
     }
-    
+
     private function loadConfig() {
         $envConfigPath = APP . 'config/' . APPLICATION_ENV . '.php';
         if (file_exists($envConfigPath)) {
@@ -74,11 +74,11 @@ class Application {
                     $this->url_controller->indexAction();
                 }
                 else {
-                    throw new Exception('Page not found', 404);                    
+                    throw new Exception('Page not found', 404);
                 }
             }
         } else {
-            throw new Exception('Page not found', 404);            
+            throw new Exception('Page not found', 404);
         }
     }
     /**

@@ -8,34 +8,63 @@ class ArticleController extends BaseController {
     public function indexAction() {
         
     }
-    /**
-     * @todo доделать экшен
-     */
-    public function saveArticleAction() {
-        $artTitle = SequreLib::clearReq($_POST['title']);
-        $artDesc = SequreLib::clearReq($_POST['short_desc']);
-        $artText = SequreLib::clearReq($_POST['text']);
-        $artCategory = SequreLib::clearReq($_POST['category_id']);
-        $artAuthor = $_SESSION['user_id'];
-        $artMeta = SequreLib::clearReq($_POST['meta']);
-        $article = new ArticleModel($artTitle, $artDesc, $artText, $artCategory, $artAuthor, $artMeta);
-        $valid = new ArticleValidate($article);
-        
+    
+    
+    public function saveArticleAction() {        
+        $article = new ArticleModel($_POST['title'], $_POST['desc'], $_POST['text'], $_POST['category_id'], $_SESSION['user_id']);
+        if (!empty($_POST['meta'])) {
+            $article->setArtMeta($_POST['meta']);
+        }        
+        $valid = new ArticleValidate($article);        
+        //if ($valid->validate()) {
+            $article->save();
+            $artId = $this->pdo->lastInsertId();            
+        //} else {            
+            //header("Location: /blog/article/addarticle");
+            //exit();
+        //}        
+        if (!empty($_POST['tag'])) {
+            $tags = explode(',', $_POST['tag']);
+            $tags = array_map('trim', $tags);
+            $tags = array_map('strtolower', $tags);            
+            $rep = new TagRepository();
+            foreach ($tags as $tag) {                
+                $find = $rep->findByName($tag);                
+                if ($find) {
+                    $tagId = $find->getTagId();                                        
+                } else {
+                    $newTag = new TagModel($tag);                    
+                    $res = $newTag->save();                    
+                    $tagId = $this->pdo->lastInsertId();                    
+                }
+                $newArtToTag = new ArtToTagModel($artId, $tagId);
+                $newArtToTag->save();
+            }
+        }
+        header("Location: /blog/admin");
+        exit();
     }
     public function addArticleAction() {
+        if ($_SESSION['user_group'] < 5) {
+            header("Location: /blog/index");
+            exit();
+        }
         //список категорий для селекта в форме добавления статьи
         $cat = new CategoryRepository();
         $category = $cat->findAll();
         $param = array (
-            ['addArticle', ['category' => $category]]
+            ['layout/logged', ['' => '']],
+            ['article/addArticle', ['category' => $category]]
         );
         $this->view->render($param);
     }
+    
+    
     public function pageAction($pageNum = 1) {
         $art = new ArticleRepository();
         $page = $art->getPage($pageNum);
         $param = array (
-            ['page', ['page' => $page]]
+            ['article/page', ['page' => $page]]
         );
         $this->view->render($param);
     }

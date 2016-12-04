@@ -24,7 +24,7 @@ class UserRepository extends BaseRepository {
         }
     }
     public function findById($id) {
-        $sql = "SELECT * FROM " . UserModel::getTableName() . " WHERE user_id = $id";
+        $sql = "SELECT * FROM " . UserModel::getTableName() . " WHERE user_id = '$id'";
         $res = $this->pdo->query($sql);
         $user = $res->fetch();
         if ($user) {
@@ -66,7 +66,7 @@ class UserRepository extends BaseRepository {
 
     public function findByGroup($group) {
         $userList = array();
-        $sql = "SELECT * FROM " . UserModel::getTableName() . " WHERE user_group = $group";
+        $sql = "SELECT * FROM " . UserModel::getTableName() . " WHERE user_group = '$group'";
         $res = $this->pdo->query($sql);
         $users = $res->fetchAll();
         if ($users) {

@@ -28,13 +28,15 @@ class TagModel extends BaseModel {
     }
 
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO " . self::$tableName . " SET
         tags_name = :tagName";
+        
         $arr = array (
             'tagName' => $this->tagName
         );
+        
         try {
-            $res = $this->pdo->prepare($sql);
+            $res = $this->pdo->prepare($sql);            
             $res->execute($arr);
             return TRUE;
         } catch (PDOException $ex) {
@@ -42,8 +44,8 @@ class TagModel extends BaseModel {
         }
     }
     public function update() {
-        $sql =  "UPDATE $this->tableName SET
-        tags_name = :tagName";
+        $sql =  "UPDATE " . self::$tableName . " SET
+        tags_name = :tagName WHERE tags_id = $this->tagId";
         $arr = array (
             'tagName' => $this->tagName
         );

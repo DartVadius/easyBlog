@@ -25,7 +25,7 @@ class ArtToTagModel extends BaseModel {
     }
 
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO " . self::$tableName . " SET
         art_to_tag_art_id = :artId,
         art_to_tag_tag_id = :tagId";
         $arr = array (
@@ -40,7 +40,7 @@ class ArtToTagModel extends BaseModel {
             return 'Что-то пошло не так: ' . $ex->getMessage();
         }
     }
-    private function update() {
+    protected function update() {
         
     }
 }

@@ -9,8 +9,7 @@ class UserController extends BaseController {
     public function indexAction() {        
         if (!empty($_SESSION['user_id'])) {
             $rep = new UserRepository();
-            $user = $rep->findById($_SESSION['user_id']);            
-            echo $_SESSION['user_group'];
+            $user = $rep->findById($_SESSION['user_id']);
             if (!empty($user)) {
                 $param = array (
                     ['layout/logged', ['' => '']],
@@ -35,13 +34,13 @@ class UserController extends BaseController {
         $this->view->render($param);
     }
 
-    public function addUserAction() {
+    public function registerAction() {
         if (!empty($_SESSION['user_id'])) {
             header("Location: /blog/user/index");
             exit();
         }
         $param = array (            
-            ['user/addUser', ['' => '']]
+            ['user/register', ['' => '']]
         );
         $this->view->render($param);
     }
@@ -57,7 +56,7 @@ class UserController extends BaseController {
             $passcheck = SequreLib::clearReq($_POST['passcheck']);        
             if ($pass != $passcheck) {
                 $_SESSION['msg'] = 'Пароли не совпадают';
-                header("Location: /blog/user/adduser");
+                header("Location: /blog/user/register");
                 exit();            
             }
 
@@ -65,18 +64,18 @@ class UserController extends BaseController {
                 $email = $_POST['email'];
                 if (!SequreLib::emailValidate($email)) {
                     $_SESSION['msg'] = "Введите корректный email";
-                    header("Location: /blog/user/adduser");
+                    header("Location: /blog/user/register");
                     exit();
                 }
                 $user = new UserModel($name, $log, $pass, $email);
             } else {
                 $user = new UserModel($name, $log, $pass);
             }
-
+            
             $valid = new UserValidate($user);
             if (!$valid->validate()) {
                 $_SESSION['msg'] = "Для логина и пароля можно использовать только латинские буквы и цифры";
-                header("Location: /blog/user/adduser");
+                header("Location: /blog/user/register");
                 exit();
             }        
 
@@ -84,17 +83,17 @@ class UserController extends BaseController {
 
             if ($rep->findByName($name)) {
                 $_SESSION['msg'] = 'Пользователь с таким именем уже зарегистрирован';
-                header("Location: /blog/user/adduser");
+                header("Location: /blog/user/register");
                 exit();
             }
 
             if ($rep->findByLogin($log)) {
                 $_SESSION['msg'] = 'Пользователь с таким логином уже зарегистрирован';
-                header("Location: /blog/user/adduser");
+                header("Location: /blog/user/register");
                 exit();
             }
 
-            $user->save();
+            $user->save();            
             $user = $rep->findByName($name);
             $id = $user->getUserId();
             $name = $user->getUserName();
@@ -110,6 +109,7 @@ class UserController extends BaseController {
     public function logoutAction() {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_name']);
+        unset($_SESSION['user_group']);
         header("Location: /blog/index");
         exit();
     }

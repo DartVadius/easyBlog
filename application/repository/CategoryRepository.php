@@ -26,9 +26,22 @@ class CategoryRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    }   
+    }  
     
-    /**
+    public function findById($id) {
+        $sql = "SELECT * FROM " . CategoryModel::getTableName() . " WHERE category_id = '$id'";
+        $res = $this->pdo->query($sql);
+        $category = $res->fetch();
+        if ($category) {            
+            $newCategory = new CategoryModel($category['category_name'], $category['category_desc'], $category['category_parent_id']);
+            $newCategory->setCategoryId($category['category_id']);
+            return $newCategory;
+        } else {
+            return FALSE;
+        }
+    }
+
+        /**
      * get branch of category starting from category ID = $id
      * 
      * @staticvar array $branch

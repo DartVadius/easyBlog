@@ -13,7 +13,7 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function findById($id) {
-        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_id = $id";
+        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_id = '$id'";
         $res = $this->pdo->query($sql);
         $article = $res->fetch();
         if ($article) {
@@ -35,7 +35,7 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function findByCatId($id) {
-        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_category = $id";
+        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_category = '$id'";
         $res = $this->pdo->query($sql);
         $article = $res->fetch();
         if ($article) {
@@ -81,7 +81,7 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function deleteById($id) {
-        $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = $id";
+        $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = '$id'";
         $this->pdo->query($sql);
     }
 }

@@ -22,8 +22,21 @@ class TagRepository extends BaseRepository {
             return FALSE;
         }
     }
+    public function findByName($name) {        
+        $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE tags_name = '$name'";
+        $res = $this->pdo->query($sql);
+        $tag = $res->fetch();        
+        if (!empty($tag)) {            
+            $newTag = new TagModel($name);
+            $newTag->setTagId($tag['tags_id']);
+            return $newTag;
+        } else {            
+            return FALSE;
+        }
+    }
+
     public function findById($id) {
-        $sql = "SELECT * FROM ".TagModel::getTableName()." WHERE tags_id = $id";
+        $sql = "SELECT * FROM ".TagModel::getTableName()." WHERE tags_id = '$id'";
         $res = $this->pdo->query($sql);
         $tags = $res->fetch();
         if ($tags) {            
@@ -33,21 +46,5 @@ class TagRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    }
-    /**
-     * splits the string in array of tag objects
-     * 
-     * @param string $str
-     * @return array
-     */
-    public function stringToTags($str) {
-        $newTags = [];
-        $tags = explode(",", $str);
-        $tags = array_map(trim, $tags);
-        foreach ($tags as $tag) {
-            $newTag = new TagModel($tag);
-            array_push($newTags, $newTag);
-        }
-        return $newTags;
-    }
+    }    
 }

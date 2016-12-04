@@ -58,7 +58,8 @@ class GroupModel extends BaseModel {
         $sql =  "UPDATE $this->tableName SET
         group_name = :groupName,
         group_value = :groupValue,
-        group_desc = :groupDesc";
+        group_desc = :groupDesc
+        WHERE group_id = $this->groupId";
         $arr = array (
             'groupName' => $this->groupName,
             'groupValue' => $this->groupValue,

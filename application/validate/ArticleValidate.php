@@ -14,11 +14,11 @@ class ArticleValidate implements iValidate {
      * 
      * @return boolean
      */
-    public function validate() {
-        if (isset($this->article->artTitle) &&
-            isset($this->article->artDesc) &&
-            isset($this->article->artCategory) && is_numeric($this->article->artCategory) &&
-            isset($this->article->artAuthor) && is_numeric($this->article->artAuthor)) 
+    public function validate() {        
+        if (!empty($this->article->artTitle) &&
+            !empty($this->article->artDesc) &&
+            !empty($this->article->artCategory) && is_numeric($this->article->artCategory) &&
+            !empty($this->article->artAuthor) && is_numeric($this->article->artAuthor)) 
             {
             return TRUE;
         } else {

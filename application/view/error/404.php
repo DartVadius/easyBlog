@@ -1,3 +1,4 @@
+<div class="row page-header"></div>
 <div class="text-center">
 <h2>
     <?php echo $exception->getMessage()?>

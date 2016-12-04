@@ -6,6 +6,17 @@
  * @author DartVadius
  */
 class ArtToTagRepository extends BaseRepository {
+    public function findById($artId, $tagId) {
+        $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE art_to_tag_art_id = '$artId' AND art_to_tag_tag_id = '$tagId'";
+        $res = $this->pdo->query($sql);
+        $tag = $res->fetch();
+        if (!empty($tag)) {
+            return new ArtToTagModel($artId, $tagId);
+        } else {
+            return FALSE;
+        }
+    }
+
     /**
      * delete one row in  junction table
      * 
@@ -13,7 +24,7 @@ class ArtToTagRepository extends BaseRepository {
      * @param int $tagId
      */
     public function deleteArtToTag($artId, $tagId) {
-        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_art_id = $artId AND art_to_tag_tag_id = $tagId";
+        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_art_id = '$artId' AND art_to_tag_tag_id = '$tagId'";
         $this->pdo->query($sql);
     }
     /**
@@ -22,7 +33,7 @@ class ArtToTagRepository extends BaseRepository {
      * @param int $artId
      */
     public function deleteByArtId($artId) {
-        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_art_id = $artId";
+        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_art_id = '$artId'";
         $this->pdo->query($sql);
     }
     /**
@@ -31,7 +42,7 @@ class ArtToTagRepository extends BaseRepository {
      * @param int $tagId
      */
     public function deleteByTagId($tagId) {
-        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_tag_id = $tagId";
+        $sql = "DELETE FROM " . ArtToTagModel::getTableName() . " WHERE art_to_tag_tag_id = '$tagId'";
         $this->pdo->query($sql);
     }
 }

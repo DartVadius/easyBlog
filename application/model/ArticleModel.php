@@ -16,7 +16,7 @@ class ArticleModel extends BaseModel {
     private $artMeta;
     private $artDate;
     private $artUpdate;
-    public function __construct($artTitle, $artDesc, $artText, $artCategory, $artAuthor, $artMeta) {
+    public function __construct($artTitle, $artDesc, $artText, $artCategory, $artAuthor, $artMeta = '') {
         parent::__construct();
         $this->artTitle = $artTitle;
         $this->artDesc = $artDesc;
@@ -38,6 +38,10 @@ class ArticleModel extends BaseModel {
     public function setArtUpdate($date) {
         $this->artUpdate = $date;
     }
+    public function setArtMeta($meta) {
+        $this->artMeta = $meta;
+    } 
+
     public function __get($name) {
         if (property_exists($this, $name)) {
             return $this->$name;
@@ -45,7 +49,7 @@ class ArticleModel extends BaseModel {
     }
 
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO ". self::$tableName . " SET
         article_title = :artTitle,
         article_desc = :artDesc,
         article_text = :artText,
@@ -72,14 +76,15 @@ class ArticleModel extends BaseModel {
         }
     }
     public function update() {
-        $sql =  "UPDATE $this->tableName SET
+        $sql =  "UPDATE " . self::$tableName . " SET
         article_title = :artTitle,
         article_desc = :artDesc,
         article_text = :artText,
         article_category = :artCategory,
         article_author = :artAuthor,
-        article_date = :artDate
-        article_meta = :artMeta";
+        article_date = :artDate,
+        article_meta = :artMeta
+        WHERE article_id = $this->artId";
         $arr = array (
             'artTitle' => $this->artTitle,
             'artDesc' => $this->artDesc,

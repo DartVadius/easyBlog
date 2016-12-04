@@ -18,8 +18,10 @@ return [
     'exceptionController' => 'error',
     'exceptionAction' => 'error',
     'title' => 'Easy Blog',
-    //количество статей на странице
+    //количество статей на главной странице
     'article_limit' => 5,
+    //количество статей на странице в админке
+    'admin_art_limit' => 5,
     //минимальная длина логина, имени и пароля
     'login_length' => 6,
     'name_length' => 3,

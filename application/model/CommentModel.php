@@ -51,7 +51,7 @@ class CommentModel extends BaseModel {
         return $this->commentParentId;
     }
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO " . self::$tableName . " SET
         comment_parent_id = :commentParentId,
         comment_user_id = :commentUserId,
         comment_article_id = :commentArticleId,
@@ -74,8 +74,9 @@ class CommentModel extends BaseModel {
         }
     }
     public function update() {
-        $sql =  "UPDATE $this->tableName SET
-        comment_text = :commentText";
+        $sql =  "UPDATE " . self::$tableName . " SET
+        comment_text = :commentText
+        WHERE comment_id = $this->commentId";
         $arr = array (
             'commentText' => $this->commentText
         );

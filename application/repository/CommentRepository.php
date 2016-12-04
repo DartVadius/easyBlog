@@ -14,7 +14,7 @@ class CommentRepository extends BaseRepository {
      */
     public function findByArtId($id) {
         $commentList = array();
-        $sql = "SELECT * FROM " . CommentModel::getTableName();
+        $sql = "SELECT * FROM " . CommentModel::getTableName() . " WHERE comment_article_id = '$id'";
         $res = $this->pdo->query($sql);
         $comm = $res->fetchAll();
         if ($comm) {

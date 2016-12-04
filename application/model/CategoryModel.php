@@ -44,7 +44,7 @@ class CategoryModel extends BaseModel {
     }
 
     public function save() {
-        $sql =  "INSERT INTO $this->tableName SET
+        $sql =  "INSERT INTO " . self::$tableName . " SET
         category_name = :categoryName,
         category_desc = :categoryDesc,
         category_parent_id = :categoryParentId";
@@ -62,10 +62,11 @@ class CategoryModel extends BaseModel {
         }
     }
     public function update() {
-        $sql =  "UPDATE $this->tableName SET
+        $sql =  "UPDATE " . self::$tableName . " SET
         category_name = :categoryName,
         category_desc = :categoryDesc,
-        category_parent_id = :categoryParentId";
+        category_parent_id = :categoryParentId
+        WHERE category_id = $this->categoryId";
         $arr = array (
             'categoryName' => $this->categoryName,
             'categoryDesc' => $this->categoryDesc,

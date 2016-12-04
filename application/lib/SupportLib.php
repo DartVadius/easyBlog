@@ -9,27 +9,30 @@ class SupportLib {
     /**
      * pagination
      * 
+     * 
      * @param array $arrayObj
      * @param int $page
      * @return boolean|array of objects
      */
-    public static function page($tableName, $page = 1) {
+    public static function page($tableName, $limit, $page = 1, $author = NULL) {
         $pageList = array();
         $pdo = PDOLib::getInstance()->getPdo();
-        $sql = "SELECT COUNT(*) FROM " . $tableName;
+        if ($author == NULL) {
+            $sql = "SELECT COUNT(*) FROM " . $tableName;
+        } else {
+            $sql = "SELECT COUNT(*) FROM " . $tableName . " WHERE article_author = '$author'";
+        }
+        
         $res = $pdo->query($sql);
         $count = $res->fetch();
         $objCount = $count['COUNT(*)'];
-             
-        //количество статей на странице, задается в конфиге
-        $limit = Application::$App->article_limit;        
+        
         //количество страниц 
         $pages = ceil($objCount / $limit);
         
         //если статей нет 
-        if ($pages == 0) {
-            $pageList['msg'] = 'No data found';
-            return $pageList;
+        if ($pages == 0) {            
+            return FALSE;
         } 
         //если запрашиваемая страница больше общего количества страниц - выводится первая страница
         if ($pages < $page || $page < 0) {
@@ -38,12 +41,19 @@ class SupportLib {
         //точка отсчета для выборки
         $start = $page * $limit - $limit;
         $name = $tableName . "_id";
-        echo $name;
-        $sql = "SELECT $name FROM " . $tableName . "LIMIT $start, $limit";
+        if ($author == NULL) {            
+            $sql = "SELECT $name FROM " . $tableName . " LIMIT $start, $limit";
+        } else {            
+            $sql = "SELECT $name FROM " . $tableName . " WHERE article_author = '$author' LIMIT $start, $limit";
+        }        
         $res = $pdo->query($sql);
-        $list = $res->fetchAll();
-        if ($list) {            
-            return $list;
+        $list = $res->fetchAll(PDO::FETCH_NUM);        
+        if (!empty($list)) {
+            $newList = array();
+            foreach ($list as $value) {
+                array_push($newList, $value[0]);
+            }
+            return $newList;
         } else {
             return FALSE;
         }

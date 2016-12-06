@@ -7,7 +7,10 @@
     <div class="col-lg-10">
         <table class="table">
             <tr>
-                <th>ID</th>
+                <th>ID
+                <a href="/blog/admin/index/ASC">&uarr;</a>
+                <a href="/blog/admin/index/DESC">&darr;</a>
+                </th>
                 <th>Название статьи</th>
                 <th>Дата</th>
                 <th>Автор</th>
@@ -29,7 +32,7 @@
                 $cat = $rep->findById($artId);                
                 echo "<td>".$cat->getCategoryName()."</td>";                
                 echo "<td>";
-                echo "<form method='POST' action='/blog/admin/update' class='text-right'>";
+                echo "<form method='POST' action='/blog/article/update/$article->artId' class='text-right'>";
                 echo "<button name ='update' value='' class='btn btn-primary wellcome'><span>Update</span></button>";
                 echo "</form>";
                 echo "</td>";

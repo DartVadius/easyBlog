@@ -11,10 +11,8 @@
             <input name="login" type="text" size="20" required='required'><br>
             <label for="pass" class="">Пароль</label>
             <input name="pass" type="password" size="20" required='required'><br>
+            <a href="/blog/user/register">Регистрация</a>
             <input type="submit" value="Login" name="submit" class="btn btn-primary">            
-        </form>
-        <form method="POST" action="/blog/user/register" class="text-right">
-            <button name ="register" value="" class="btn btn-primary wellcome"><span>Register</span></button>
-        </form>
+        </form>        
     </div>
 </div>

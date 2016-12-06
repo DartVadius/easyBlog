@@ -79,8 +79,29 @@ class ArticleRepository extends BaseRepository {
             return FALSE;
         }
     }
+    
+    /**
+     * get all ID`s of articles in DB
+     * 
+     * @return boolean | array 
+     */
+    public function findAllId($author = NULL, $sort = 'ASC') {
+        if ($author == NULL) {
+            $sql = "SELECT article_id FROM " . ArticleModel::getTableName() . " ORDER BY article_id $sort";
+        } else {
+            $sql = "SELECT article_id FROM " . ArticleModel::getTableName() . " WHERE article_author = $author ORDER BY article_id $sort";
+        }
+        
+        $res = $this->pdo->query($sql);
+        $art = $res->fetchAll();
+        if (!empty($art)) {
+            return $art;
+        } else {
+            return FALSE;
+        }
+    }
 
-    public function deleteById($id) {
+        public function deleteById($id) {
         $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = '$id'";
         $this->pdo->query($sql);
     }

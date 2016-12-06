@@ -17,9 +17,9 @@ return [
     'defaultAction' => 'index',
     'exceptionController' => 'error',
     'exceptionAction' => 'error',
-    'title' => 'Easy Blog',
+    'title' => 'Ugly Blog',
     //количество статей на главной странице
-    'article_limit' => 5,
+    'article_limit' => 2,
     //количество статей на странице в админке
     'admin_art_limit' => 5,
     //минимальная длина логина, имени и пароля

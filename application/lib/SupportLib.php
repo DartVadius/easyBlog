@@ -6,59 +6,34 @@
  * @author DartVadius
  */
 class SupportLib {
+    
     /**
      * pagination
      * 
-     * 
-     * @param array $arrayObj
+     * @param array $obj array of all ID`s in the specified table in database
      * @param int $page
-     * @return boolean|array of objects
+     * @param int $limit
+     * @return boolean | array of ID`s on specified  page
      */
-    public static function page($tableName, $limit, $page = 1, $author = NULL) {
-        $pageList = array();
-        $pdo = PDOLib::getInstance()->getPdo();
-        if ($author == NULL) {
-            $sql = "SELECT COUNT(*) FROM " . $tableName;
-        } else {
-            $sql = "SELECT COUNT(*) FROM " . $tableName . " WHERE article_author = '$author'";
-        }
-        
-        $res = $pdo->query($sql);
-        $count = $res->fetch();
-        $objCount = $count['COUNT(*)'];
-        
-        //количество страниц 
+    public static function pagination(array $obj, $page, $limit) {        
+        $objCount = count($obj);
         $pages = ceil($objCount / $limit);
-        
-        //если статей нет 
-        if ($pages == 0) {            
-            return FALSE;
-        } 
-        //если запрашиваемая страница больше общего количества страниц - выводится первая страница
-        if ($pages < $page || $page < 0) {
+        if ($page <= 0) {
             $page = 1;
         }
-        //точка отсчета для выборки
+        if ($page > $pages) {
+            $page = $pages;
+        }
         $start = $page * $limit - $limit;
-        $name = $tableName . "_id";
-        if ($author == NULL) {            
-            $sql = "SELECT $name FROM " . $tableName . " LIMIT $start, $limit";
-        } else {            
-            $sql = "SELECT $name FROM " . $tableName . " WHERE article_author = '$author' LIMIT $start, $limit";
-        }        
-        $res = $pdo->query($sql);
-        $list = $res->fetchAll(PDO::FETCH_NUM);        
-        if (!empty($list)) {
-            $newList = array();
-            foreach ($list as $value) {
-                array_push($newList, $value[0]);
-            }
-            return $newList;
+        $output = array_slice($obj, $start, $limit);
+        if (!empty($output)) {
+            return $output;
         } else {
             return FALSE;
         }
     }
-    /**
+
+        /**
      * 
      * @param string $id name of ID folder in DB
      * @param string $parent_id name of parent ID folder in DB     
@@ -85,7 +60,7 @@ class SupportLib {
      * 
      * @todo !!!!!!!
      */
-    public static function showTree($comments) {
+    public static function showTree($data) {
     static $tree;
     $tree .= "<ul>";
     foreach($comments as $arr){

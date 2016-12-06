@@ -6,9 +6,9 @@
  */
 class ArticleController extends BaseController {
     public function indexAction() {
-        
+        header("Location: /blog/index");
+        exit();
     }
-    
     
     public function saveArticleAction() {        
         $article = new ArticleModel($_POST['title'], $_POST['desc'], $_POST['text'], $_POST['category_id'], $_SESSION['user_id']);
@@ -44,8 +44,9 @@ class ArticleController extends BaseController {
         header("Location: /blog/admin");
         exit();
     }
+    
     public function addArticleAction() {
-        if ($_SESSION['user_group'] < 5) {
+        if (empty($_SESSION['user_group']) || $_SESSION['user_group'] < 5) {
             header("Location: /blog/index");
             exit();
         }
@@ -58,14 +59,35 @@ class ArticleController extends BaseController {
         );
         $this->view->render($param);
     }
-    
-    
-    public function pageAction($pageNum = 1) {
+    public function idAction($id = NULL) {
+        if ($id == NULL) {
+            header("Location: /blog/index");
+            exit();
+        }
         $art = new ArticleRepository();
-        $page = $art->getPage($pageNum);
-        $param = array (
-            ['article/page', ['page' => $page]]
-        );
+        $newArt = $art->findById($id);        
+        if (!empty($_SESSION['user_id'])) {
+            $param = array (                
+                ['layout/logged', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/id', ['article' => $newArt]]            
+            );
+        } else {
+            $param = array (
+                ['layout/guest', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/id', ['article' => $newArt]]
+            );
+        }
+        
         $this->view->render($param);
+    }
+
+    public function updateAction($id = NULL) {
+        if (empty($_SESSION['user_group']) || $_SESSION['user_group'] <= 1) {
+            header("Location: /blog/index");
+            exit();
+        }
+        
     }
 }

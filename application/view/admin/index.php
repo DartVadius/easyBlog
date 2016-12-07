@@ -1,3 +1,13 @@
+<?php 
+$pagePr = $page - 1;
+$pageNx = $page + 1;
+if ($page <= 1) {
+    $pagePr = 1;
+}
+if ($page >= $_SESSION['page_num']) {
+    $pageNx = $_SESSION['page_num'];
+}
+?>
 <div class="row">
     <div class="col-lg-2">
         <form method="POST" action="/blog/article/addArticle">
@@ -32,7 +42,7 @@
                 $cat = $rep->findById($artId);                
                 echo "<td>".$cat->getCategoryName()."</td>";                
                 echo "<td>";
-                echo "<form method='POST' action='/blog/article/update/$article->artId' class='text-right'>";
+                echo "<form method='POST' action='/blog/article/updateArticle/" . $article->artId . "' class='text-right'>";
                 echo "<button name ='update' value='' class='btn btn-primary wellcome'><span>Update</span></button>";
                 echo "</form>";
                 echo "</td>";
@@ -42,4 +52,14 @@
         ?>     
         </table>
     </div>
+</div>
+<div class="row">    
+    <div class="col-lg-2">        
+    </div>
+    <div class="col-lg-10 pager">
+        <ul>
+          <li><a href='/blog/admin/index/<?php echo $pagePr; ?>'>Prev</a></li>
+          <li><a href='/blog/admin/index/<?php echo $pageNx; ?>'>Next</a></li>
+        </ul>
+    </div>    
 </div>

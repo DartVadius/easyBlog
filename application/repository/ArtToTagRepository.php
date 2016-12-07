@@ -7,8 +7,14 @@
  */
 class ArtToTagRepository extends BaseRepository {
     public function findById($artId, $tagId) {
-        $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE art_to_tag_art_id = '$artId' AND art_to_tag_tag_id = '$tagId'";
-        $res = $this->pdo->query($sql);
+        $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE art_to_tag_art_id = :artId AND art_to_tag_tag_id = :tagId'";
+        
+        $arr = array (
+            'artId' => $artId,
+            'tagId' => $tagId            
+        );
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr);
         $tag = $res->fetch();
         if (!empty($tag)) {
             return new ArtToTagModel($artId, $tagId);

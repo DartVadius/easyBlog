@@ -38,6 +38,7 @@ class IndexController extends BaseController {
         $this->view->render($param);
     }
     
+    
    /** public function error($exception = '') {
         $param = array (['error', ['exception' => $exception]]);
         $this->view->render($param);        

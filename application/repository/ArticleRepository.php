@@ -13,8 +13,12 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function findById($id) {
-        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_id = '$id'";
-        $res = $this->pdo->query($sql);
+        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_id = :id";
+        $arr = array (
+            'id' => $id           
+        );
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr); 
         $article = $res->fetch();
         if ($article) {
             $newArticle = new ArticleModel(
@@ -27,7 +31,7 @@ class ArticleRepository extends BaseRepository {
             );
             $newArticle->setArtId($article['article_id']);
             $newArticle->setArtDate($article['article_date']);
-            $newArticle->setArtUpdate($article['article_update']);
+            $newArticle->setArtUpdate($article['article_update']);            
             return $newArticle;
         } else {
             return FALSE;

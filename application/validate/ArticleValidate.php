@@ -15,13 +15,14 @@ class ArticleValidate implements iValidate {
      * @return boolean
      */
     public function validate() {        
-        if (!empty($this->article->artTitle) &&
-            !empty($this->article->artDesc) &&
-            !empty($this->article->artCategory) && is_numeric($this->article->artCategory) &&
-            !empty($this->article->artAuthor) && is_numeric($this->article->artAuthor)) 
-            {
+        if ($this->article->artTitle &&
+            $this->article->artDesc &&
+            $this->article->artText &&    
+            $this->article->artCategory && preg_match('/^\d+$/', $this->article->artCategory) &&
+            $this->article->artAuthor && preg_match('/^\d+$/', $this->article->artAuthor)) 
+            {            
             return TRUE;
-        } else {
+        } else {            
             return FALSE;
         }
     }

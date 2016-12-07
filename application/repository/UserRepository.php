@@ -7,7 +7,7 @@
  */
 class UserRepository extends BaseRepository {
     public function findAll() {
-        $artList = array();
+        $userList = array();
         $sql = "SELECT * FROM " . UserModel::getTableName();
         $res = $this->pdo->query($sql);
         $users = $res->fetchAll();
@@ -16,9 +16,9 @@ class UserRepository extends BaseRepository {
                 $newUser = new UserModel($user['user_name'], $user['user_login'], $user['user_password'], $user['user_email']);
                 $newUser->setUserGroup($user['user_group']);
                 $newUser->setUserId($user['user_id']);
-                array_push($artList, $newArticle);
+                array_push($userList, $newUser);
             }
-            return $artList;
+            return $userList;
         } else {
             return FALSE;
         }

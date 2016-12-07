@@ -17,6 +17,9 @@ class ErrorController extends BaseController {
         } elseif ($exception->getCode() == 500) {
             $param = array (['error/500', ['exception' => $exception]]);
             $this->view->render($param);
+        } elseif ($exception->getCode() == 400) {
+            $param = array (['error/400', ['exception' => $exception]]);
+            $this->view->render($param);
         } else {
             $param = array (['error/error', ['exception' => $exception]]);
             $this->view->render($param);

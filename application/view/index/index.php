@@ -1,8 +1,11 @@
 <?php 
 $pagePr = $page - 1;
 $pageNx = $page + 1;
-if ($page < 1 || $page > $_SESSION['page_num']) {
-    $pagePr = $pageNx = 1;
+if ($page <= 1) {
+    $pagePr = 1;
+}
+if ($page >= $_SESSION['page_num']) {
+    $pageNx = $_SESSION['page_num'];
 }
     
 ?>

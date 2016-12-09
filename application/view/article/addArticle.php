@@ -16,20 +16,26 @@ function showTree($data) {
 ?>
 
 <div class="row">
-    <div class="col-lg-1">
-        
+    <div class="col-lg-2">
+        <a class="btn btn-sm btn-block btn-primary" href='/blog/admin'>Main</a>
+        <a class="btn btn-sm btn-block btn-primary" href='/blog/article/addArticle'>New article</a>
     </div>
-    <div class="col-lg-11">
-        <form class="" action="/blog/article/addarticle" method="POST" enctype="multipart/form-data">            
+    <div class="col-lg-10">
+        <form class="" action="/blog/article/save" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="">
             <label for="title" class="">Заголовок статьи</label><br>
             <input name="title" type="text" size="100" required='required'><br><br>
             <label for="desc" class="">Краткое описание статьи</label><br>
             <textarea name="desc" cols="100" rows="3" required='required'></textarea><br><br>
-
+            <script>
+                CKEDITOR.replace('desc');
+            </script>
             <label for="text" class="">Полный текст статьи</label><br>
-            <textarea name="text" cols="100" rows="10" required='required'></textarea><br><br>
-
-            <label for="meta" class="">Ключевые слова</label><br>
+            <textarea id="full" name="text" cols="100" rows="10" required='required'></textarea><br><br>
+            <script>
+                CKEDITOR.replace('text');
+            </script>
+            <label for="meta" class="">Мета</label><br>
             <input name="meta" type="text" size="100"><br><br>
             <label for="category_id" class="">Выберите категорию</label><br>
             <select name ="category_id" size="1">                

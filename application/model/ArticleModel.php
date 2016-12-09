@@ -81,8 +81,7 @@ class ArticleModel extends BaseModel {
         article_desc = :artDesc,
         article_text = :artText,
         article_category = :artCategory,
-        article_author = :artAuthor,
-        article_date = :artDate,
+        article_author = :artAuthor,        
         article_meta = :artMeta
         WHERE article_id = $this->artId";
         $arr = array (
@@ -90,8 +89,7 @@ class ArticleModel extends BaseModel {
             'artDesc' => $this->artDesc,
             'artText' => $this->artText,
             'artAuthor' => $this->artAuthor,
-            'artCategory' => $this->artCategory,
-            'artDate' => $this->artDate,
+            'artCategory' => $this->artCategory,            
             'artMeta' => $this->artMeta
         );
         try {

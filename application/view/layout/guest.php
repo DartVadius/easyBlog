@@ -2,7 +2,7 @@
     <div class="col-md-9">
     </div>
     <div class="col-md-3">
-        <div class="alert-info">
+        <div class="alert-info small">
             <?php echo $_SESSION['msg'];
             $_SESSION['msg'] = ''; ?>
         </div>

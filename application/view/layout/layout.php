@@ -5,7 +5,8 @@
     <script src="/blog/public/js/jquery-3.1.1.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/blog/public/css/bootstrap.css">
     <script src="/blog/public/js/bootstrap.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="/blog/public/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/blog/public/css/style.css">    
+    <script src="/blog/public/js/ckeditor/ckeditor.js"></script>
     
     <title><?php echo Application::$App->title; ?></title>
 </head>

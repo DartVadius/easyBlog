@@ -46,5 +46,29 @@ class TagRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    }    
+    } 
+    
+    public function findByArtId($id) {
+        $tagList = array();
+        $sql = "SELECT tags_id, tags_name FROM tags 
+            LEFT JOIN art_to_tag ON tags_id = art_to_tag_tag_id
+            LEFT JOIN article ON article_id = art_to_tag_art_id 
+            WHERE article_id = :id";
+        $arr = array (
+            'id' => $id
+        );        
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr);
+        $tags = $res->fetchAll();
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                $newTag = new TagModel($tag['tags_name']);
+                $newTag->setTagId($tag['tags_id']);
+                array_push($tagList, $newTag);
+            }
+            return $tagList;
+        } else {
+            return FALSE;
+        }
+    }
 }

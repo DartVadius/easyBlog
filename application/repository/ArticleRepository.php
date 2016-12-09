@@ -106,7 +106,11 @@ class ArticleRepository extends BaseRepository {
     }
 
         public function deleteById($id) {
-        $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = '$id'";
-        $this->pdo->query($sql);
+        $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = :id";
+        $arr = array (
+            'id' => $id           
+        );
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr);        
     }
 }

@@ -14,7 +14,7 @@ class ArtToTagModel extends BaseModel {
         $this->artId = $artId;
         $this->tagId = $tagId;
     }
-    public static function getTableName() {        
+    public static function getTableName() {
         return self::$tableName;
     }
     public function getArtId() {
@@ -41,6 +41,6 @@ class ArtToTagModel extends BaseModel {
         }
     }
     protected function update() {
-        
+
     }
 }

@@ -1,23 +1,23 @@
-<?php 
+<?php
 $cat = showTree($tree, $art);
 function showTree($data, $art) {
-    static $tree;    
+    static $tree;
     foreach($data as $arr){
         if (!empty($arr['children'])) {
             if ($art->artCategory == $arr['category_id']) {
                 $tree .= "<option value='{$arr['category_id']}' selected='selected'>" . $arr['category_name'] . "</option>";
             } else {
                 $tree .= "<option value='{$arr['category_id']}'>" . $arr['category_name'] . "</option>";
-            }            
+            }
             showTree ($arr['children'], $art);
         } else {
             if ($art->artCategory == $arr['category_id']) {
                 $tree .= "<option value='{$arr['category_id']}' selected='selected'>" . $arr['category_name'] . "</option>";
             } else {
                 $tree .= "<option value='{$arr['category_id']}'>" . $arr['category_name'] . "</option>";
-            }            
+            }
         }
-    }    
+    }
     return $tree;
 }
 ?>
@@ -45,7 +45,7 @@ function showTree($data, $art) {
             <label for="meta" class="">Мета</label><br>
             <input name="meta" value="<?php echo $art->artMeta ?>" type="text" size="120"><br><br>
             <label for="category_id" class="">Выберите категорию</label><br>
-            <select name ="category_id" size="1">                
+            <select name ="category_id" size="1">
                 <?php echo $cat; ?>
             </select><br><br>
             <label for="tag" class="">Тэги (через запятую)</label><br>

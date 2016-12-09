@@ -6,14 +6,19 @@
  * @author DartVadius
  */
 class UserController extends BaseController {
-    public function indexAction() {        
+    /**
+     * user profile prerendering
+     *
+     * @throws Exception
+     */
+    public function indexAction() {
         if (!empty($_SESSION['user_id'])) {
             $rep = new UserRepository();
             $user = $rep->findById($_SESSION['user_id']);
             if (!empty($user)) {
                 $param = array (
                     ['layout/logged', ['' => '']],
-                    ['user/user', ['user_name' => $user->getUserName(), 
+                    ['user/user', ['user_name' => $user->getUserName(),
                         'user_login' => $user->getUserLogin(),
                         'user_email' => $user->getUserEmail()]]
                 );
@@ -29,35 +34,40 @@ class UserController extends BaseController {
                     'user_email' => ''
                     ]
                 ]
-            );  
+            );
         }
         $this->view->render($param);
     }
-
+    /**
+     * redirect to register form for new users
+     */
     public function registerAction() {
         if (!empty($_SESSION['user_id'])) {
             header("Location: /blog/user/index");
             exit();
         }
-        $param = array (            
+        $param = array (
             ['user/register', ['' => '']]
         );
         $this->view->render($param);
     }
     
+    /**
+     * saving new user in database
+     */
     public function saveUserAction() {
         if (!empty($_POST)) {
             $_SESSION['msg'] = '';
-            $name = SequreLib::clearReq($_POST['name']);        
+            $name = SequreLib::clearReq($_POST['name']);
             $_SESSION['reg_name'] = $name;
-            $log = SequreLib::clearReq($_POST['login']);        
+            $log = SequreLib::clearReq($_POST['login']);
             $_SESSION['reg_log'] = $log;
-            $pass = SequreLib::clearReq($_POST['pass']);        
-            $passcheck = SequreLib::clearReq($_POST['passcheck']);        
+            $pass = SequreLib::clearReq($_POST['pass']);
+            $passcheck = SequreLib::clearReq($_POST['passcheck']);
             if ($pass != $passcheck) {
                 $_SESSION['msg'] = 'Пароли не совпадают';
                 header("Location: /blog/user/register");
-                exit();            
+                exit();
             }
 
             if (!empty($_POST['email'])) {
@@ -71,13 +81,13 @@ class UserController extends BaseController {
             } else {
                 $user = new UserModel($name, $log, $pass);
             }
-            
+
             $valid = new UserValidate($user);
             if (!$valid->validate()) {
                 $_SESSION['msg'] = "Для логина и пароля можно использовать только латинские буквы и цифры";
                 header("Location: /blog/user/register");
                 exit();
-            }        
+            }
 
             $rep = new UserRepository();
 
@@ -93,7 +103,7 @@ class UserController extends BaseController {
                 exit();
             }
 
-            $user->save();            
+            $user->save();
             $user = $rep->findByName($name);
             $id = $user->getUserId();
             $name = $user->getUserName();
@@ -106,6 +116,10 @@ class UserController extends BaseController {
         header("Location: /blog/index");
         exit();
     }
+    
+    /**
+     * logout and redirect to main page
+     */
     public function logoutAction() {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_name']);
@@ -113,6 +127,10 @@ class UserController extends BaseController {
         header("Location: /blog/index");
         exit();
     }
+    
+    /**
+     * login
+     */
     public function loginAction() {
         if (!empty($_POST['login']) && !empty($_POST['pass'])) {
             $log = SequreLib::clearReq($_POST['login']);
@@ -121,7 +139,7 @@ class UserController extends BaseController {
             $rep = new UserRepository();
             $user = $rep->findByLogin($log);
             if (empty($user)) {
-                $_SESSION['msg'] = 'Пользователь с таким логином и паролем не найден';                
+                $_SESSION['msg'] = 'Пользователь с таким логином и паролем не найден';
             } else {
                 $hash = $user->getUserPass();
                 if (password_verify($pass, $hash)) {
@@ -130,13 +148,13 @@ class UserController extends BaseController {
                     $_SESSION['user_group'] = $user->getUserGroup();
                 }
                 else {
-                    $_SESSION['msg'] = 'Пользователь с таким логином и паролем не найден';                
+                    $_SESSION['msg'] = 'Пользователь с таким логином и паролем не найден';
                 }
-            }            
+            }
             header("Location: /blog/index");
             exit();
         }
         header("Location: /blog/index");
         exit();
-    }    
+    }
 }

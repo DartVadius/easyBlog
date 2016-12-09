@@ -56,9 +56,9 @@ class AdminController extends BaseController {
             );
         $this->view->render($param);
     }
-    
+
     /**
-     *
+     * redirect to users page in admin panel
      */
     public function usersAction() {
         if ($_SESSION['user_group'] < 25 || empty($_SESSION['user_id'])) {
@@ -72,5 +72,29 @@ class AdminController extends BaseController {
                 ['admin/users', ['users' => $users]]
             );
         $this->view->render($param);
+    }
+    /**
+     * prerendering of update user in admin panel
+     * 
+     * @param int $id
+     */
+    public function updateuserAction($id = NULL) {
+        if ($id == NULL || $_SESSION['user_group'] < 25) {
+            header("Location: /admin/index");
+            exit();
+        }
+        $rep = new UserRepository();
+        $user = $rep->findById($id);
+        $rep =  new GroupRepository();
+        $group = $rep->findAll();
+        $param = array (
+                ['layout/logged', ['' => '']],
+                ['admin/user', ['user' => $user, 'access' => $group]]
+            );
+        $this->view->render($param);
+    }
+
+    public function saveUpdateUserAction() {
+
     }
 }

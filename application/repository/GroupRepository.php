@@ -28,7 +28,7 @@ class GroupRepository extends BaseRepository {
             'val' => $val
         );
         $res = $this->pdo->prepare($sql);
-        $res->execute($arr);        
+        $res->execute($arr);
         $group = $res->fetch();
         if (!empty($group)) {
             $newGroup = new GroupModel($group['group_name'], $group['group_value'], $group['group_desc']);

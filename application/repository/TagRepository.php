@@ -22,15 +22,15 @@ class TagRepository extends BaseRepository {
             return FALSE;
         }
     }
-    public function findByName($name) {        
+    public function findByName($name) {
         $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE tags_name = '$name'";
         $res = $this->pdo->query($sql);
-        $tag = $res->fetch();        
-        if (!empty($tag)) {            
+        $tag = $res->fetch();
+        if (!empty($tag)) {
             $newTag = new TagModel($name);
             $newTag->setTagId($tag['tags_id']);
             return $newTag;
-        } else {            
+        } else {
             return FALSE;
         }
     }
@@ -39,24 +39,24 @@ class TagRepository extends BaseRepository {
         $sql = "SELECT * FROM ".TagModel::getTableName()." WHERE tags_id = '$id'";
         $res = $this->pdo->query($sql);
         $tags = $res->fetch();
-        if ($tags) {            
+        if ($tags) {
             $newTag = new TagModel($tags['tags_name']);
-            $newTag->setTagId($tags['tags_id']);                        
+            $newTag->setTagId($tags['tags_id']);
             return $newTag;
         } else {
             return FALSE;
         }
-    } 
-    
+    }
+
     public function findByArtId($id) {
         $tagList = array();
-        $sql = "SELECT tags_id, tags_name FROM tags 
+        $sql = "SELECT tags_id, tags_name FROM tags
             LEFT JOIN art_to_tag ON tags_id = art_to_tag_tag_id
-            LEFT JOIN article ON article_id = art_to_tag_art_id 
+            LEFT JOIN article ON article_id = art_to_tag_art_id
             WHERE article_id = :id";
         $arr = array (
             'id' => $id
-        );        
+        );
         $res = $this->pdo->prepare($sql);
         $res->execute($arr);
         $tags = $res->fetchAll();

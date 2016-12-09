@@ -12,7 +12,7 @@ class UserModel extends BaseModel {
     private $userPass;
     private $userEmail;
     private $userGroup = NULL;
-    
+
     public function __construct($userName, $userLogin, $userPass, $userEmail = '') {
         parent::__construct();
         $this->userName = $userName;
@@ -20,8 +20,8 @@ class UserModel extends BaseModel {
         $this->userPass = $userPass;
         $this->userEmail = $userEmail;
     }
-    
-    public static function getTableName() {        
+
+    public static function getTableName() {
         return self::$tableName;
     }
     public function getUserEmail() {
@@ -51,7 +51,7 @@ class UserModel extends BaseModel {
     public function setUserGroup($userGroup) {
         $this->userGroup = $userGroup;
     }
-    
+
     public function save() {
         $sql =  "INSERT INTO ". self::$tableName . " SET
         user_name = :userName,
@@ -59,7 +59,7 @@ class UserModel extends BaseModel {
         user_password = :userPass,
         user_email = :userEmail,
         user_group = :userGroup";
-        $pass = password_hash($this->userPass, PASSWORD_DEFAULT);        
+        $pass = password_hash($this->userPass, PASSWORD_DEFAULT);
         $arr = array (
             'userName' => $this->userName,
             'userLogin' => $this->userLogin,
@@ -75,7 +75,7 @@ class UserModel extends BaseModel {
             return 'Что-то пошло не так: ' . $ex->getMessage();
         }
     }
-    
+
     public function update() {
         $sql =  "UPDATE " . self::$tableName . "SET
             user_email = :userEmail,

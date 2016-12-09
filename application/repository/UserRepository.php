@@ -74,10 +74,10 @@ class UserRepository extends BaseRepository {
                 $newUser = new UserModel($user['user_name'], $user['user_login'], $user['user_password'], $user['user_email']);
                 $newUser->setUserGroup($user['user_group']);
                 array_push($userList, $newUser);
-            }            
+            }
             return $userList;
         } else {
             return FALSE;
         }
-    }    
+    }
 }

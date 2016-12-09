@@ -21,7 +21,7 @@ class ArticleController extends BaseController {
             header("Location: /blog/index");
             exit();
         }
-        
+
         //the list of categories for a select in the form of addition of article
         $tree = SupportLib::tree('category_id', 'category_parent_id', 'category');
         $param = array (
@@ -43,7 +43,7 @@ class ArticleController extends BaseController {
             if ($valid->validate()) {
                 $article->save();
                 $artId = $this->pdo->lastInsertId();
-            } else {                
+            } else {
                 header("Location: /blog/article/addarticle");
                 exit();
             }
@@ -85,17 +85,19 @@ class ArticleController extends BaseController {
         }
         $art = new ArticleRepository();
         $newArt = $art->findById($id);
+        $tag = new TagRepository();
+        $tags = $tag->findByArtId($id);
         if (!empty($_SESSION['user_id'])) {
             $param = array (
                 ['layout/logged', ['' => '']],
                 ['layout/menu', ['' => '']],
-                ['article/id', ['article' => $newArt]]
+                ['article/id', ['article' => $newArt, 'tags' => $tags]]
             );
         } else {
             $param = array (
                 ['layout/guest', ['' => '']],
                 ['layout/menu', ['' => '']],
-                ['article/id', ['article' => $newArt]]
+                ['article/id', ['article' => $newArt, 'tags' => $tags]]
             );
         }
 
@@ -186,6 +188,11 @@ class ArticleController extends BaseController {
             exit();
         }
     }
+    /**
+     * delete article by id, relationships with the tags are also deleted
+     *
+     * @param int $id
+     */
     public function deleteAction($id = NULL) {
         if ($id == NULL) {
             header("Location: /blog/admin/index/{$_SESSION['admin_page']}");

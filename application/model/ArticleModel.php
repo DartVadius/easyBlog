@@ -24,9 +24,9 @@ class ArticleModel extends BaseModel {
         $this->artCategory = $artCategory;
         $this->artAuthor = $artAuthor;
         $this->artMeta = $artMeta;
-    } 
-    public static function getTableName() {        
-        return self::$tableName;    
+    }
+    public static function getTableName() {
+        return self::$tableName;
     }
 
     public function setArtId($id) {
@@ -40,7 +40,7 @@ class ArticleModel extends BaseModel {
     }
     public function setArtMeta($meta) {
         $this->artMeta = $meta;
-    } 
+    }
 
     public function __get($name) {
         if (property_exists($this, $name)) {
@@ -55,7 +55,7 @@ class ArticleModel extends BaseModel {
         article_text = :artText,
         article_category = :artCategory,
         article_author = :artAuthor,
-        article_date = :artDate,        
+        article_date = :artDate,
         article_meta = :artMeta";
         $date = date("Y-m-d H:i:s");
         $arr = array (
@@ -64,7 +64,7 @@ class ArticleModel extends BaseModel {
             'artText' => $this->artText,
             'artCategory' => $this->artCategory,
             'artAuthor' => $this->artAuthor,
-            'artDate' => $date,            
+            'artDate' => $date,
             'artMeta' => $this->artMeta
         );
         try {
@@ -81,7 +81,7 @@ class ArticleModel extends BaseModel {
         article_desc = :artDesc,
         article_text = :artText,
         article_category = :artCategory,
-        article_author = :artAuthor,        
+        article_author = :artAuthor,
         article_meta = :artMeta
         WHERE article_id = $this->artId";
         $arr = array (
@@ -89,7 +89,7 @@ class ArticleModel extends BaseModel {
             'artDesc' => $this->artDesc,
             'artText' => $this->artText,
             'artAuthor' => $this->artAuthor,
-            'artCategory' => $this->artCategory,            
+            'artCategory' => $this->artCategory,
             'artMeta' => $this->artMeta
         );
         try {

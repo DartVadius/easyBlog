@@ -19,7 +19,6 @@ class TagModel extends BaseModel {
     public function getTagName() {
         return $this->tagName;
     }
-
     public function setTagId($id) {
         $this->tagId = $id;
     }
@@ -30,13 +29,13 @@ class TagModel extends BaseModel {
     public function save() {
         $sql =  "INSERT INTO " . self::$tableName . " SET
         tags_name = :tagName";
-        
+
         $arr = array (
             'tagName' => $this->tagName
         );
-        
+
         try {
-            $res = $this->pdo->prepare($sql);            
+            $res = $this->pdo->prepare($sql);
             $res->execute($arr);
             return TRUE;
         } catch (PDOException $ex) {

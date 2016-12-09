@@ -6,6 +6,12 @@
  * @author DartVadius
  */
 class ArtToTagRepository extends BaseRepository {
+    /**
+     * 
+     * @param int $artId
+     * @param int $tagId
+     * @return boolean|\ArtToTagModel
+     */
     public function findById($artId, $tagId) {
         $sql = "SELECT * FROM " . TagModel::getTableName() . " WHERE art_to_tag_art_id = :artId AND art_to_tag_tag_id = :tagId'";
 

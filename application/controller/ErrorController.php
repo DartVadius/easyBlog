@@ -1,8 +1,8 @@
 <?php
 
 /**
- * ErrorController 
- * 
+ * ErrorController
+ *
  * @author DartVadius
  */
 class ErrorController extends BaseController {

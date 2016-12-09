@@ -19,7 +19,7 @@ class CommentModel extends BaseModel {
         $this->commentArticleId = $commentArticleId;
         $this->commentText = $commentText;
     }
-    public static function getTableName() {        
+    public static function getTableName() {
         return self::$tableName;
     }
     public function getCommentUserId() {

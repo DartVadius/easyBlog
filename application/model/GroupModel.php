@@ -16,8 +16,8 @@ class GroupModel extends BaseModel {
         $this->groupValue = $groupValue;
         $this->groupDesc = $groupDesc;
     }
-    
-    public static function getTableName() {        
+
+    public static function getTableName() {
         return self::$tableName;
     }
     public function setGroupId($id) {

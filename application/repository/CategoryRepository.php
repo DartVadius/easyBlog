@@ -8,11 +8,11 @@
 class CategoryRepository extends BaseRepository {
     /**
      * get all categories
-     * 
+     *
      * @return boolean|array of objects
      */
     public function findAll() {
-        $categoryList = array();        
+        $categoryList = array();
         $sql = "SELECT * FROM " . CategoryModel::getTableName();
         $res = $this->pdo->query($sql);
         $category = $res->fetchAll();
@@ -26,13 +26,13 @@ class CategoryRepository extends BaseRepository {
         } else {
             return FALSE;
         }
-    }  
-    
+    }
+
     public function findById($id) {
         $sql = "SELECT * FROM " . CategoryModel::getTableName() . " WHERE category_id = '$id'";
         $res = $this->pdo->query($sql);
         $category = $res->fetch();
-        if ($category) {            
+        if ($category) {
             $newCategory = new CategoryModel($category['category_name'], $category['category_desc'], $category['category_parent_id']);
             $newCategory->setCategoryId($category['category_id']);
             return $newCategory;
@@ -43,35 +43,35 @@ class CategoryRepository extends BaseRepository {
 
     /**
      * get branch of category starting from category ID = $id
-     * 
+     *
      * @staticvar array $branch
      * @param array $tree -> get it from SupportLib::Tree
      * @param int $id
      * @return array
      */
-    
-    public function findChildren($tree, $id) {        
-        static $branch;        
-        foreach ($tree as $value) {            
+
+    public function findChildren($tree, $id) {
+        static $branch;
+        foreach ($tree as $value) {
             if ($value['category_id'] == $id) {
-                $branch[0] = $value;                
+                $branch[0] = $value;
             }
             if (isset($value['children'])) {
                $this->findChildren($value['children'], $id);
             }
-        }        
+        }
         return $branch;
     }
     /**
      * get all category ID`s from this branch
-     * 
+     *
      * @staticvar array $categoryID
      * @param array $branch -> get it from $this->findChildren()
-     * @return array 
+     * @return array
      */
     public function findChildrenCategoryId($branch) {
         static $categoryID = array();
-        foreach ($branch as $cat) {            
+        foreach ($branch as $cat) {
             array_push($categoryID, $cat['category_id']);
             if (isset($cat['children'])) {
                $this->findChildrenCategoryId($cat['children']);

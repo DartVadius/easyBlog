@@ -15,10 +15,10 @@ class ArticleRepository extends BaseRepository {
     public function findById($id) {
         $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_id = :id";
         $arr = array (
-            'id' => $id           
+            'id' => $id
         );
         $res = $this->pdo->prepare($sql);
-        $res->execute($arr); 
+        $res->execute($arr);
         $article = $res->fetch();
         if ($article) {
             $newArticle = new ArticleModel(
@@ -31,7 +31,7 @@ class ArticleRepository extends BaseRepository {
             );
             $newArticle->setArtId($article['article_id']);
             $newArticle->setArtDate($article['article_date']);
-            $newArticle->setArtUpdate($article['article_update']);            
+            $newArticle->setArtUpdate($article['article_update']);
             return $newArticle;
         } else {
             return FALSE;
@@ -83,11 +83,11 @@ class ArticleRepository extends BaseRepository {
             return FALSE;
         }
     }
-    
+
     /**
      * get all ID`s of articles in DB
-     * 
-     * @return boolean | array 
+     *
+     * @return boolean | array
      */
     public function findAllId($author = NULL, $sort = 'ASC') {
         if ($author == NULL) {
@@ -95,7 +95,7 @@ class ArticleRepository extends BaseRepository {
         } else {
             $sql = "SELECT article_id FROM " . ArticleModel::getTableName() . " WHERE article_author = $author ORDER BY article_id $sort";
         }
-        
+
         $res = $this->pdo->query($sql);
         $art = $res->fetchAll();
         if (!empty($art)) {
@@ -108,9 +108,9 @@ class ArticleRepository extends BaseRepository {
         public function deleteById($id) {
         $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = :id";
         $arr = array (
-            'id' => $id           
+            'id' => $id
         );
         $res = $this->pdo->prepare($sql);
-        $res->execute($arr);        
+        $res->execute($arr);
     }
 }

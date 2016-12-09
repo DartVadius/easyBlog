@@ -15,9 +15,9 @@ class CategoryModel extends BaseModel {
         parent::__construct();
         $this->categoryName = $categoryName;
         $this->categoryDesc = $categoryDesc;
-        $this->categoryParentId = $categoryParentId;        
+        $this->categoryParentId = $categoryParentId;
     }
-    public static function getTableName() {        
+    public static function getTableName() {
         return self::$tableName;
     }
     public function setCategoryParentId($id) {

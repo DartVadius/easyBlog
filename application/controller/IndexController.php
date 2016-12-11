@@ -15,6 +15,9 @@ class IndexController extends BaseController {
         if ($page > $_SESSION['page_num']) {
             $page = $_SESSION['page_num'];
         }
+        //variable used to return to the original page
+        $_SESSION['blog_page'] = $page;
+
         $rep = new ArticleRepository();
         $artId = $rep->findAllId();
         if (!empty($artId)) {

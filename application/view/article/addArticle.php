@@ -1,8 +1,8 @@
-<?php 
+<?php
 $cat = showTree($tree);
 
 function showTree($data) {
-    static $tree;    
+    static $tree;
     foreach($data as $arr){
         if (!empty($arr['children'])) {
             $tree .= "<option value='{$arr['category_id']}'>" . $arr['category_name'] . "</option>";
@@ -10,7 +10,7 @@ function showTree($data) {
         } else {
             $tree .= "<option value='{$arr['category_id']}'>" . $arr['category_name'] . "</option>";
         }
-    }    
+    }
     return $tree;
 }
 ?>
@@ -18,7 +18,11 @@ function showTree($data) {
 <div class="row">
     <div class="col-lg-2">
         <a class="btn btn-sm btn-block btn-primary" href='/blog/admin'>Main</a>
-        <a class="btn btn-sm btn-block btn-primary" href='/blog/article/addArticle'>New article</a>
+        <?php
+        if ($_SESSION['user_group'] >= 25) {
+            echo "<a class='btn btn-sm btn-block btn-primary' href='/blog/admin/users'>Users</a>";
+        }
+        ?>
     </div>
     <div class="col-lg-10">
         <form class="" action="/blog/article/save" method="POST" enctype="multipart/form-data">
@@ -38,12 +42,12 @@ function showTree($data) {
             <label for="meta" class="">Мета</label><br>
             <input name="meta" type="text" size="100"><br><br>
             <label for="category_id" class="">Выберите категорию</label><br>
-            <select name ="category_id" size="1">                
+            <select name ="category_id" size="1">
                 <?php echo $cat; ?>
             </select><br><br>
             <label for="tag" class="">Тэги (через запятую)</label><br>
             <input name="tag" type="text" size="100"><br><br>
             <input type="submit" value="Добавить статью" name="submit" class="btn btn-primary wellcome">
         </form>
-    </div>    
+    </div>
 </div>

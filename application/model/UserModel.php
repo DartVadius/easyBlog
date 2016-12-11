@@ -77,15 +77,12 @@ class UserModel extends BaseModel {
     }
 
     public function update() {
-        $sql =  "UPDATE " . self::$tableName . "SET
-            user_email = :userEmail,
-            user_password = :userPass,
+        $sql =  "UPDATE " . self::$tableName . " SET
+            user_email = :userEmail,            
             user_group = :userGroup
-            WHERE user_id = $this->userId";
-        $pass = password_hash($this->userPass, PASSWORD_DEFAULT);
+            WHERE user_id = $this->userId";        
         $arr = array (
-            'userEmail' => $this->userEmail,
-            'userPass' => $pass,
+            'userEmail' => $this->userEmail,            
             'userGroup' => $this->userGroup
         );
         try {
@@ -93,7 +90,8 @@ class UserModel extends BaseModel {
             $res->execute($arr);
             return TRUE;
         } catch (PDOException $ex) {
-            return 'Что-то пошло не так: ' . $ex->getMessage();
+            throw new PDOException();
         }
     }
+    
 }

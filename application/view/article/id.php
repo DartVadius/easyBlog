@@ -11,13 +11,14 @@
             echo "<p class='small'>" . $article->artDate . "</p>";
             $name = $author->findById($article->artAuthor)->getUserName();
             echo "<p class='small'>" . $name . "</p>";
-            echo "<p>" . $article->artText . "</p>";
+            echo $article->artText ;
+            echo "<p></p>";
             foreach ($tags as $tag) {
                 echo "<a href='/blog/article/tag/" . $tag->getTagId() . "' class='btn btn-primary btn-xs'>" . $tag->getTagName() . "</a>&nbsp;";
             }
             echo "<p></p>";
             echo "</div>";
-            echo "<br>";
+            echo "<br>";            
         }
         ?>
     </div>

@@ -89,7 +89,7 @@ class ArticleRepository extends BaseRepository {
      *
      * @return boolean | array
      */
-    public function findAllId($author = NULL, $sort = 'ASC') {
+    public function findAllId($author = NULL, $sort = 'DESC') {
         if ($author == NULL) {
             $sql = "SELECT article_id FROM " . ArticleModel::getTableName() . " ORDER BY article_id $sort";
         } else {
@@ -105,12 +105,38 @@ class ArticleRepository extends BaseRepository {
         }
     }
 
-        public function deleteById($id) {
+    public function deleteById($id) {
         $sql = "DELETE FROM " . ArticleModel::getTableName() . " WHERE article_id = :id";
         $arr = array (
             'id' => $id
         );
         $res = $this->pdo->prepare($sql);
         $res->execute($arr);
+    }
+    
+    public function findByTagId($id) {
+        $artList = array();
+        $sql = " SELECT * FROM article 
+                LEFT JOIN art_to_tag ON article_id = art_to_tag_art_id
+                LEFT JOIN tags ON tags_id = art_to_tag_tag_id
+                WHERE tags_id = :id ORDER BY article_id DESC";
+        $arr = array (
+            'id' => $id
+        );
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr);
+        $articles = $res->fetchAll();        
+        if (!empty($articles)) {
+            foreach ($articles as $article) {
+                $newArt = new ArticleModel($article['article_title'], $article['article_desc'], $article['article_text'], $article['article_category'], $article['article_author'], $article['article_meta']);
+                $newArt->setArtId($article['article_id']);
+                $newArt->setArtDate($article['article_date']);
+                $newArt->setArtUpdate($article['article_update']);
+                array_push($artList, $newArt);
+            }
+            return $artList;
+        } else {
+            return FALSE;
+        }
     }
 }

@@ -8,7 +8,7 @@
 class CommentModel extends BaseModel {
     protected static $tableName = 'comment';
     private $commentId;
-    private $commentParentId = NULL;
+    private $commentParentId = 0;
     private $commentUserId;
     private $commentArticleId;
     private $commentDate;

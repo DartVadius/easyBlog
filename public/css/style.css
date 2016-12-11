@@ -1,7 +1,6 @@
 .art {
     border-bottom: solid #2aabd2 1px;
 }
-
-.formline {
-    display: inline-block;
+.comm li {
+    list-style-type: none;
 }

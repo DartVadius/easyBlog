@@ -87,17 +87,30 @@ class ArticleController extends BaseController {
         $newArt = $art->findById($id);
         $tag = new TagRepository();
         $tags = $tag->findByArtId($id);
+        $commTree = SupportLib::tree('comment_id', 'comment_parent_id', 'comment');
+        if (!empty($commTree)) {
+            $commList = array();
+            foreach ($commTree as $tree) {
+                if ($tree['comment_article_id'] == $newArt->artId) {
+                    array_push($commList, $tree);
+                }
+            }
+        } else {
+            $commList = '';
+        }
         if (!empty($_SESSION['user_id'])) {
             $param = array (
                 ['layout/logged', ['' => '']],
                 ['layout/menu', ['' => '']],
-                ['article/id', ['article' => $newArt, 'tags' => $tags]]
+                ['article/id', ['article' => $newArt, 'tags' => $tags]],
+                ['article/comments', ['article' => $newArt, 'commList' => $commList]]
             );
         } else {
             $param = array (
                 ['layout/guest', ['' => '']],
                 ['layout/menu', ['' => '']],
-                ['article/id', ['article' => $newArt, 'tags' => $tags]]
+                ['article/id', ['article' => $newArt, 'tags' => $tags]],
+                ['article/comments', ['article' => $newArt, 'commList' => $commList]]
             );
         }
 
@@ -204,5 +217,32 @@ class ArticleController extends BaseController {
         $artToTag->deleteByArtId($id);
         header("Location: /blog/admin/index/{$_SESSION['admin_page']}");
         exit();
+    }
+    /**
+     * find articles by tag
+     *
+     * @param int $id
+     */
+    public function tagAction($id = NULL) {
+        if ($id == NULL) {
+            header("Location: /blog/index/index/{$_SESSION['blog_page']}");
+            exit();
+        }
+        $rep = new ArticleRepository();
+        $art = $rep->findByTagId($id);
+        if (!empty($_SESSION['user_id'])) {
+            $param = array (
+                ['layout/logged', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/tags', ['article' => $art]]
+            );
+        } else {
+            $param = array (
+                ['layout/guest', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/tags', ['article' => $art]]
+            );
+        }
+        $this->view->render($param);
     }
 }

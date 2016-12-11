@@ -1,4 +1,4 @@
-<?php 
+<?php
 $pagePr = $page - 1;
 $pageNx = $page + 1;
 if ($page <= 1) {
@@ -7,15 +7,15 @@ if ($page <= 1) {
 if ($page >= $_SESSION['page_num']) {
     $page = $pageNx = $_SESSION['page_num'];
 }
-    
+
 ?>
-<div class="row">    
+<div class="row">
     <div class="col-lg-1">
-        
+
     </div>
     <div class="col-lg-10">
         <?php
-        $author = new UserRepository();        
+        $author = new UserRepository();
         if (!empty($article)) {
             foreach ($article as $art) {
                 echo "<div class = 'art'>";
@@ -25,17 +25,17 @@ if ($page >= $_SESSION['page_num']) {
                 echo "<p class='small'>" . $name . "</p>";
                 echo "<p>" . $art->artDesc . "</p>";
                 echo "<p><a href='/blog/article/id/" . $art->artId . "'>Подробнее</a></p>";
-                echo "</div>";                
+                echo "</div>";
             }
         }
         ?>
     </div>
     <div class="col-lg-1">
-        
+
     </div>
 </div>
-<div class="row">    
-    <div class="col-lg-1">        
+<div class="row">
+    <div class="col-lg-1">
     </div>
     <div class="col-lg-10 pager">
         <ul>
@@ -47,6 +47,6 @@ if ($page >= $_SESSION['page_num']) {
         </ul>
     </div>
     <div class="col-lg-1">
-        
+
     </div>
 </div>

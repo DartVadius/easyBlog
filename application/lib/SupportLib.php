@@ -55,7 +55,7 @@ class SupportLib {
             }
             $references[$item[$parent_id]]['children'][] = $item;
             $references[$item[$id]] =& $references[$item[$parent_id]]['children'][count($references[$item[$parent_id]]['children']) - 1];
-        }        
+        }         
         return $tree[0]['children'];
     }    
 }

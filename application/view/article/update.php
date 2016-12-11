@@ -1,5 +1,12 @@
 <?php
 $cat = showTree($tree, $art);
+/**
+ * 
+ * @staticvar string $tree
+ * @param array $data 
+ * @param object $art
+ * @return string
+ */
 function showTree($data, $art) {
     static $tree;
     foreach($data as $arr){

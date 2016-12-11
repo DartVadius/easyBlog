@@ -75,7 +75,7 @@ class AdminController extends BaseController {
     }
     /**
      * prerendering of update user in admin panel
-     * 
+     *
      * @param int $id
      */
     public function updateuserAction($id = NULL) {
@@ -93,8 +93,28 @@ class AdminController extends BaseController {
             );
         $this->view->render($param);
     }
-
-    public function saveUpdateUserAction() {
-
+    /**
+     * save user in database after update
+     *
+     * @param int $id
+     */
+    public function saveUpdateUserAction($id) {
+        if (isset($_POST['group'])) {
+            $gr = new GroupRepository();
+            $groupvalue = SequreLib::clearReq($_POST['group']);
+            $group = $gr->findByValue($groupvalue);
+            if (!empty($group)) {
+                $rep = new UserRepository();
+                $user = $rep->findById($id);
+                if (!empty($user)) {
+                    $user->setUserGroup($groupvalue);
+                    $user->update();
+                    header("Location: /blog/admin/users");
+                    exit();
+                }
+            }
+        }
+        header("Location: /admin/index");
+        exit();
     }
 }

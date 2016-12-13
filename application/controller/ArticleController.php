@@ -245,4 +245,26 @@ class ArticleController extends BaseController {
         }
         $this->view->render($param);
     }
+    public function categoryAction($id = NULL) {
+        if ($id == NULL) {
+            header("Location: /blog/index/index/{$_SESSION['blog_page']}");
+            exit();
+        }
+        $rep = new ArticleRepository();
+        $art = $rep->findByCatId($id);        
+        if (!empty($_SESSION['user_id'])) {
+            $param = array (
+                ['layout/logged', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/category', ['article' => $art]]
+            );
+        } else {
+            $param = array (
+                ['layout/guest', ['' => '']],
+                ['layout/menu', ['' => '']],
+                ['article/category', ['article' => $art]]
+            );
+        }
+        $this->view->render($param);
+    }
 }

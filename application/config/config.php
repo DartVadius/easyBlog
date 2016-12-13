@@ -1,6 +1,5 @@
 <?php
-function __autoload($class) {
-
+function autoloadMain($class) {
     preg_match_all('/[A-Z][^A-Z]*/', $class, $results);
     $results =  end($results[0]);
     $pathToClassFile = __DIR__ . '/../'. strtolower($results). '/' . $class.'.php';
@@ -8,7 +7,7 @@ function __autoload($class) {
         require_once $pathToClassFile;
     }
 }
-
+spl_autoload_register('autoloadMain');
 define('APPLICATION_ENV', $_SERVER['APPLICATION_ENV']);
 
 return [

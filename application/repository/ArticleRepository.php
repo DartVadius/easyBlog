@@ -39,22 +39,30 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function findByCatId($id) {
-        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_category = '$id'";
-        $res = $this->pdo->query($sql);
-        $article = $res->fetch();
-        if ($article) {
-            $newArticle = new ArticleModel(
-                $article['article_title'],
-                $article['article_desc'],
-                $article['article_text'],
-                $article['article_category'],
-                $article['article_author'],
-                $article['article_meta']
-            );
-            $newArticle->setArtId($article['article_id']);
-            $newArticle->setArtDate($article['article_date']);
-            $newArticle->setArtUpdate($article['article_update']);
-            return $newArticle;
+        $artList = array();
+        $sql = "SELECT * FROM ".ArticleModel::getTableName()." WHERE article_category = :id";
+        $arr = array (
+            'id' => $id
+        );
+        $res = $this->pdo->prepare($sql);
+        $res->execute($arr);
+        $art = $res->fetchAll();
+        if ($art) {
+            foreach ($art as $article) {
+                $newArticle = new ArticleModel(
+                    $article['article_title'],
+                    $article['article_desc'],
+                    $article['article_text'],
+                    $article['article_category'],
+                    $article['article_author'],
+                    $article['article_meta']
+                );
+                $newArticle->setArtId($article['article_id']);
+                $newArticle->setArtDate($article['article_date']);
+                $newArticle->setArtUpdate($article['article_update']);
+                array_push($artList, $newArticle);
+            }            
+            return $artList;
         } else {
             return FALSE;
         }

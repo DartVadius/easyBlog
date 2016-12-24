@@ -12,7 +12,7 @@ class IndexController extends BaseController {
         if ($page < 1) {
             $page = 1;
         }
-        if ($page > $_SESSION['page_num']) {
+        if (!empty($_SESSION['page_num']) && $page > $_SESSION['page_num']) {
             $page = $_SESSION['page_num'];
         }
         //variable used to return to the original page
